@@ -1,5 +1,5 @@
 # Create your models here.
-from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 
 """
@@ -9,9 +9,12 @@ Texto pequeno: 100
 """
 
 
+# TODO: Como utilizar a classe Meta? Criar campo de updated pros simuladores?
+
+
 class Profile(models.Model):
     # Usuário
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # Mensagem de solicitação de uso
     request_message = models.TextField()
@@ -23,7 +26,7 @@ class Profile(models.Model):
         return self.user.username
 
 
-class Simulator(models.Model):  # Devo criar campo para data?
+class Simulator(models.Model):
     # Criador do simulador
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='simulators')
 
