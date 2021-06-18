@@ -13,7 +13,10 @@ Além disso, encontrar de onde class='errorlist nonfield' vem.
 -->
 
 {% else %}
-<p>Please, use the following form to login.</p>
+<p>
+    Please, use the following form to log-in. If you don't have an account
+    <a href="{% url 'register' %}">register here</a>.
+</p>
 {% endif %}
 <div class="login-form">
     <form action="{% url 'login' %}" method="post">

@@ -11,6 +11,7 @@ Texto pequeno: 100
 # TODO: Como utilizar a classe Meta? Criar campo de updated pros simuladores?
 
 
+# TODO: Criar ação que permita alterar o is_active dos usuários selecionados
 User._meta.get_field('username')._unique = True  # Ideal: no cadastro, username = email.
 User._meta.get_field('email')._unique = True
 

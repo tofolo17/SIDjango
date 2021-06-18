@@ -15,7 +15,7 @@ admin.site.unregister(User)
 # Register out own model admin, based on the default UserAdmin
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ['first_name', 'last_name', 'email', 'is_active']
+    list_display = ['username', 'first_name', 'last_name', 'is_active']
 
 
 @admin.register(Profile)
