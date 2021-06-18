@@ -22,6 +22,9 @@ class Profile(models.Model):
     # Informações da instituição de ensino
     institution_name = models.CharField(max_length=100)  # TODO: Cadastrar outras informações da instituição (quais?)
 
+    # Status do usuário
+    # TODO: Campo que binário que seja default como "não autorizado"
+
     def __str__(self):
         return self.user.username
 
