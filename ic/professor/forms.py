@@ -1,5 +1,6 @@
 from django import forms
-from django.contrib.auth.models import User
+
+from .models import Conta
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -13,7 +14,7 @@ class UserRegistrationForm(forms.ModelForm):
     )
 
     class Meta:
-        model = User
+        model = Conta
         fields = ('first_name', 'last_name', 'email')
 
     def clean_password2(self):

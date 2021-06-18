@@ -1,28 +1,18 @@
-# Register your models here.
-
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+from django.contrib.auth import admin as auth_admin
 
-from .models import Profile, Simulator
+from .models import *
 
 admin.site.site_url = "/account"
 
-# Unregister the provided model admin
-admin.site.unregister(User)
+admin.site.register(Conta, auth_admin.UserAdmin)
 
 
-# Register out own model admin, based on the default UserAdmin
-@admin.register(User)
-class CustomUserAdmin(UserAdmin):
-    list_display = ['username', 'first_name', 'last_name', 'is_active']
-
-
-@admin.register(Profile)
+@admin.register(Perfil)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'institution_name']
+    list_display = ['account', 'institution_name']
 
 
-@admin.register(Simulator)
+@admin.register(Simulador)
 class SimulatorAdmin(admin.ModelAdmin):
-    list_display = ['author', 'title']
+    list_display = ['profile', 'title']

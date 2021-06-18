@@ -1,51 +1,49 @@
-# Create your models here.
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-"""
-Texto grande: 500
-Texto médio: 250
-Texto pequeno: 100
-"""
 
-# TODO: Como utilizar a classe Meta? Criar campo de updated pros simuladores?
+class Conta(AbstractUser):
+    pass
 
-
-# TODO: Criar ação que permita alterar o is_active dos usuários selecionados
-User._meta.get_field('username')._unique = True  # Ideal: no cadastro, username = email.
-User._meta.get_field('email')._unique = True
+    class Meta:
+        verbose_name_plural = 'Contas'
 
 
-class Profile(models.Model):
-    # Usuário
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class Perfil(models.Model):
+    """
+    Anotações:
+        Quais outras informações institucionais cadastrar?
+    """
 
-    # Mensagem de solicitação de uso
+    account = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     request_message = models.TextField()
+    institution_name = models.CharField(max_length=100)
 
-    # Informações da instituição de ensino
-    institution_name = models.CharField(max_length=100)  # TODO: Cadastrar outras informações da instituição (quais?)
+    class Meta:
+        verbose_name_plural = 'Perfis'
 
     def __str__(self):
-        return self.user.username
+        return self.account.username
 
 
-class Simulator(models.Model):
-    # Criador do simulador
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='simulators')
+class Simulador(models.Model):
+    """
+    Anotações:
+        Revisar variáveis de conceitos
+        Achar tratamentos para os fields "table_dimensions" e links
+    """
 
-    # Variáveis do simulador
+    profile = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='simulators')
     title = models.CharField(max_length=100)
-
     required_concepts = models.CharField(max_length=250)
-    minimum_concepts = models.CharField(max_length=250)  # TODO: Revisar variáveis de conceitos
-
+    minimum_concepts = models.CharField(max_length=250)
     table_dimensions = models.CharField(max_length=100)
-
     youtube_link = models.CharField(max_length=250)
     form_link = models.CharField(max_length=250)
 
-    # TODO: Tentar achar field type adequado para "table_dimensions" e links
+    class Meta:
+        verbose_name_plural = 'Simuladores'
 
     def __str__(self):
         return self.title
