@@ -4,7 +4,13 @@ from django.db import models
 
 
 class Conta(AbstractUser):
-    pass
+    """
+    Anotações:
+        Alterar label_name dos fields.
+    """
+    request_message = models.TextField(blank=True)
+    institution_name = models.CharField(blank=True, max_length=100)
+    authorized = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = 'Contas'
@@ -30,8 +36,8 @@ class Perfil(models.Model):
 class Simulador(models.Model):
     """
     Anotações:
-        Revisar variáveis de conceitos
-        Achar tratamentos para os fields "table_dimensions" e links
+        Revisar variáveis de conceitos;
+        Achar tratamentos para os fields "table_dimensions" e links.
     """
 
     profile = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='simulators')

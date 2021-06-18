@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import forms as admin_forms
 
 from .models import Conta
 
@@ -22,3 +23,13 @@ class UserRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password2']
+
+
+class UserChangeForm(admin_forms.UserChangeForm):
+    """
+    Anotações:
+        Podemos alterar a UserCreationForm posteriormente.
+    """
+
+    class Meta(admin_forms.UserChangeForm.Meta):
+        model = Conta
