@@ -5,7 +5,13 @@
 {% block content %}
 <h1>Login</h1>
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>  <!-- Alterar mensagens de erro -->
+<p>Your username and password didn't match. Please try again.</p>
+
+<!--
+Alterar mensagens de erro e campos de input
+Além disso, encontrar de onde class='errorlist nonfield' vem.
+-->
+
 {% else %}
 <p>Please, use the following form to login.</p>
 {% endif %}

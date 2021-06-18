@@ -8,8 +8,11 @@ Texto médio: 250
 Texto pequeno: 100
 """
 
-
 # TODO: Como utilizar a classe Meta? Criar campo de updated pros simuladores?
+
+
+User._meta.get_field('username')._unique = True  # Ideal: no cadastro, username = email.
+User._meta.get_field('email')._unique = True
 
 
 class Profile(models.Model):
@@ -21,9 +24,6 @@ class Profile(models.Model):
 
     # Informações da instituição de ensino
     institution_name = models.CharField(max_length=100)  # TODO: Cadastrar outras informações da instituição (quais?)
-
-    # Status do usuário
-    # TODO: Campo que binário que seja default como "não autorizado"
 
     def __str__(self):
         return self.user.username
