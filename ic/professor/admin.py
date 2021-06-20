@@ -7,9 +7,9 @@ from .models import *
 admin.site.site_url = '/account'
 
 
-@admin.action(description='Autorizar Contas')
-def authorize(modeladmin, request, queryset):
-    queryset.update(authorized=True)
+@admin.action(description='Ativar Contas')
+def activate(modeladmin, request, queryset):
+    queryset.update(is_active=True)
     for data in queryset:
         send_mail(
             subject="Você foi autorizado",
@@ -19,19 +19,19 @@ def authorize(modeladmin, request, queryset):
         )
 
 
-@admin.action(description='Desautorizar Contas')
-def deauthorize(modeladmin, request, queryset):
-    queryset.update(authorized=False)
+@admin.action(description='Desativar Contas')
+def disable(modeladmin, request, queryset):
+    queryset.update(is_active=False)
 
 
 @admin.register(Conta)
 class AccountAdmin(auth_admin.UserAdmin):
-    list_filter = ['authorized']
-    list_display = ['email', 'first_name', 'last_name', 'authorized']
+    list_filter = ['is_active']
+    list_display = ['email', 'first_name', 'last_name', 'is_active']
     fieldsets = auth_admin.UserAdmin.fieldsets + (
-        ('Campos Personalizados', {'fields': ('request_message', 'institution_name', 'authorized')}),
+        ('Campos Personalizados', {'fields': ('request_message', 'institution_name')}),
     )
-    actions = [authorize, deauthorize]
+    actions = [activate, disable]
 
 
 @admin.register(Simulador)

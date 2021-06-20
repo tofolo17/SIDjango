@@ -6,7 +6,6 @@ from django.db import models
 class Conta(AbstractUser):
     request_message = models.TextField(blank=True, verbose_name="Mensagem de solicitação")
     institution_name = models.CharField(blank=True, max_length=100, verbose_name="Nome da instituição de ensino")
-    authorized = models.BooleanField(default=False, verbose_name="Autorizado")
 
     class Meta:
         verbose_name_plural = 'Contas'

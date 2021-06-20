@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 
 from .models import Conta
 
@@ -30,3 +31,11 @@ class UserRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password2']
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(label='Email')
+    error_messages = {
+        'invalid_login': "Test error message.",
+        'inactive': "This account is inactive.",
+    }

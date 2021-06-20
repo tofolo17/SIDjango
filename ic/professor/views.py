@@ -1,11 +1,12 @@
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.shortcuts import render
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, LoginForm
 
 
 @login_required
@@ -22,6 +23,8 @@ def register(request):
         user_form = UserRegistrationForm(request.POST)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
+
+            new_user.is_active = False
             new_user.username = user_form.cleaned_data['email']
 
             password = user_form.cleaned_data['password']
@@ -30,7 +33,6 @@ def register(request):
                 new_user.set_password(password)
                 new_user.save()
 
-                # Envia e-mail
                 send_mail(
                     subject="Nova requisição de uso",
                     message="http://" + request.get_host() + "/admin/",
@@ -52,3 +54,8 @@ def register(request):
         'account/register.html',
         {'user_form': user_form}
     )
+
+
+class LoginView(auth_views.LoginView):
+    form_class = LoginForm
+    template_name = 'account/login.html'
