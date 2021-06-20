@@ -1,9 +1,14 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
 from django.shortcuts import render
 
 from .forms import UserRegistrationForm
+
+
+# from django.contrib import admin
 
 
 @login_required
@@ -27,6 +32,15 @@ def register(request):
                 validate_password(password, new_user)
                 new_user.set_password(password)
                 new_user.save()
+
+                # Envia e-mail
+                send_mail(
+                    subject="Nova requisição de uso",
+                    message="http://" + request.get_host() + "/admin/",
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[settings.ADMIN_MAIL]
+                )
+
                 return render(
                     request,
                     'account/register_done.html',
