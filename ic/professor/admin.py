@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
+from django.core.mail import send_mail
 
 from .models import *
 
@@ -9,6 +10,13 @@ admin.site.site_url = '/account'
 @admin.action(description='Autorizar Contas')
 def authorize(modeladmin, request, queryset):
     queryset.update(authorized=True)
+    for data in queryset:
+        send_mail(
+            subject="Você foi autorizado",
+            message="http://" + request.get_host() + "/account/",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[data.username]
+        )
 
 
 @admin.action(description='Desautorizar Contas')

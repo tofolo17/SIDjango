@@ -8,9 +8,6 @@ from django.shortcuts import render
 from .forms import UserRegistrationForm
 
 
-# from django.contrib import admin
-
-
 @login_required
 def dashboard(request):
     return render(
