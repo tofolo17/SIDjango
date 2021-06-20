@@ -4,33 +4,15 @@ from django.db import models
 
 
 class Conta(AbstractUser):
-    """
-    Anotações:
-        Alterar label_name dos fields.
-    """
-    request_message = models.TextField(blank=True)
-    institution_name = models.CharField(blank=True, max_length=100)
-    authorized = models.BooleanField(default=False)
+    request_message = models.TextField(blank=True, verbose_name="Mensagem de solicitação")
+    institution_name = models.CharField(blank=True, max_length=100, verbose_name="Nome da instituição de ensino")
+    authorized = models.BooleanField(default=False, verbose_name="Autorizado")
 
     class Meta:
         verbose_name_plural = 'Contas'
 
 
-class Perfil(models.Model):
-    """
-    Anotações:
-        Quais outras informações institucionais cadastrar?
-    """
-
-    account = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    request_message = models.TextField()
-    institution_name = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name_plural = 'Perfis'
-
-    def __str__(self):
-        return self.account.username
+Conta._meta.get_field('email')._unique = True
 
 
 class Simulador(models.Model):
@@ -40,7 +22,7 @@ class Simulador(models.Model):
         Achar tratamentos para os fields "table_dimensions" e links.
     """
 
-    profile = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='simulators')
+    profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='simulators')
     title = models.CharField(max_length=100)
     required_concepts = models.CharField(max_length=250)
     minimum_concepts = models.CharField(max_length=250)

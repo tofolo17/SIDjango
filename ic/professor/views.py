@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.shortcuts import render
 
 from .forms import UserRegistrationForm
@@ -19,13 +21,19 @@ def register(request):
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
             new_user.username = user_form.cleaned_data['email']
-            new_user.set_password(user_form.cleaned_data['password'])
-            new_user.save()
-            return render(
-                request,
-                'account/register_done.html',
-                {'new_user': new_user}
-            )
+
+            password = user_form.cleaned_data['password']
+            try:
+                validate_password(password, new_user)
+                new_user.set_password(password)
+                new_user.save()
+                return render(
+                    request,
+                    'account/register_done.html',
+                    {'new_user': new_user}
+                )
+            except ValidationError as e:
+                user_form.add_error('password', e)
     else:
         user_form = UserRegistrationForm()
     return render(

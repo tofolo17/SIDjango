@@ -1,11 +1,16 @@
 from .models import Conta
 
 
-class IsActiveAuthBackend(object):
+class IsAuthorizedAuthBackend(object):
+    """
+    Anotações:
+        Mensagem de erro diferenciada para account.authorized == False
+    """
+
     def authenticate(self, request, username=None, password=None):
         try:
             account = Conta.objects.get(email=username)
-            if account.check_password(password):
+            if account.check_password(password) and account.authorized:
                 return account
             return None
         except Conta.DoesNotExist:
