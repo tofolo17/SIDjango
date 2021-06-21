@@ -21,7 +21,7 @@ class Simulador(models.Model):
         Achar tratamentos para os fields "table_dimensions" e links.
     """
 
-    profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='simulators')
+    profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     required_concepts = models.CharField(max_length=250)
     minimum_concepts = models.CharField(max_length=250)

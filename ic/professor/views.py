@@ -5,17 +5,24 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView
 
 from .forms import UserRegistrationForm, LoginForm
+from .models import Simulador
 
 
-@login_required
-def dashboard(request):
-    return render(
-        request,
-        'account/dashboard.html',
-        {'section': 'dashboard'}
-    )
+@method_decorator(login_required, name='dispatch')
+class SimulatorsListView(ListView):
+    model = Simulador
+    template_name = 'account/dashboard.html'
+    context_object_name = 'simulators'
+
+    def get_context_data(self, **kwargs):
+        context = super(SimulatorsListView, self).get_context_data(**kwargs)
+        simulators = self.get_queryset().filter(profile_id=self.request.user.id)
+        context['simulators'] = simulators
+        return context
 
 
 def register(request):

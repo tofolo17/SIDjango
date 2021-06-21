@@ -7,4 +7,11 @@
 <p>
     Welcome to your dashboard.
 </p>
+{% for simulator in simulators %}
+<p>
+    {{ simulator.title }}
+</p>
+{% empty %}
+There are no similar posts yet.
+{% endfor %}
 {% endblock %}
