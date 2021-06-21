@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Criar simulador{% endblock %}
+
+{% block content %}
+<h1>Criar simulador</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Create</button>
+</form>
+
+{% endblock %}

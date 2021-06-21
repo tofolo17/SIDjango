@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Apagar simulador #{{object.id}}{% endblock %}
+
+{% block content %}
+<h1>Apagar simulador #{{object.id}}</h1>
+<form method="post">
+    {% csrf_token %}
+    Are you sure you want to delete <strong>{{ object }}</strong> ?
+    <button type="submit">Delete</button>
+</form>
+{% endblock %}

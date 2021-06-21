@@ -5,24 +5,75 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from .forms import UserRegistrationForm, LoginForm
 from .models import Simulador
 
 
 @method_decorator(login_required, name='dispatch')
-class SimulatorsListView(ListView):
+class SimulatorListView(ListView):
     model = Simulador
     template_name = 'account/dashboard.html'
     context_object_name = 'simulators'
 
     def get_context_data(self, **kwargs):
-        context = super(SimulatorsListView, self).get_context_data(**kwargs)
+        context = super(SimulatorListView, self).get_context_data(**kwargs)
         simulators = self.get_queryset().filter(profile_id=self.request.user.id)
         context['simulators'] = simulators
         return context
+
+
+@method_decorator(login_required, name='dispatch')
+class SimulatorDetailView(DetailView):
+    model = Simulador
+    template_name = 'account/detail.html'
+    context_object_name = 'simulator'
+
+
+@method_decorator(login_required, name='dispatch')
+class SimulatorCreateView(CreateView):
+    model = Simulador
+    template_name = 'account/create.html'
+    fields = (
+        'title',
+        'required_concepts',
+        'minimum_concepts',
+        'table_dimensions',
+        'youtube_link',
+        'form_link'
+    )
+    success_url = reverse_lazy('dashboard')
+
+    def form_valid(self, form):
+        form.instance.profile = self.request.user
+        return super(SimulatorCreateView, self).form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class SimulatorUpdateView(UpdateView):
+    model = Simulador
+    template_name = 'account/update.html'
+    fields = (
+        'title',
+        'required_concepts',
+        'minimum_concepts',
+        'table_dimensions',
+        'youtube_link',
+        'form_link'
+    )
+
+    def get_success_url(self):
+        return reverse_lazy('detail', kwargs={'pk': self.object.id})
+
+
+@method_decorator(login_required, name='dispatch')
+class SimulatorDeleteView(DeleteView):
+    model = Simulador
+    template_name = 'account/delete.html'
+    success_url = reverse_lazy('dashboard')
 
 
 def register(request):
