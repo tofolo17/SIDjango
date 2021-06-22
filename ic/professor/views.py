@@ -4,13 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from .forms import UserRegistrationForm, LoginForm
-from .models import Simulador
+from .models import Simulador, get_token
 
 
 @method_decorator(login_required, name='dispatch')
@@ -21,7 +21,7 @@ class SimulatorListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(SimulatorListView, self).get_context_data(**kwargs)
-        simulators = self.get_queryset().filter(profile_id=self.request.user.id)
+        simulators = self.get_queryset().filter(profile_id=self.request.user.id).order_by('-updated')
         context['simulators'] = simulators
         return context
 
@@ -74,6 +74,33 @@ class SimulatorDeleteView(DeleteView):
     model = Simulador
     template_name = 'account/delete.html'
     success_url = reverse_lazy('dashboard')
+
+
+@login_required()
+def change_token(request, pk):
+    status = None
+    simulator = get_object_or_404(Simulador, pk=pk)
+    if request.method == 'POST':
+        simulator.token = get_token()
+        simulator.save()
+        status = "Ok"
+    return render(
+        request,
+        'account/change_token.html',
+        {
+            'simulator': simulator,
+            'status': status
+        }
+    )
+
+
+"""
+def simulator(request):
+    return render(
+        request,
+        'student/simulator.html'
+    )
+"""
 
 
 def register(request):

@@ -36,4 +36,4 @@ class AccountAdmin(auth_admin.UserAdmin):
 
 @admin.register(Simulador)
 class SimulatorAdmin(admin.ModelAdmin):
-    list_display = ['profile', 'title']
+    list_display = ['profile', 'title', 'token']
