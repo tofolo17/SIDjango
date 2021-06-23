@@ -94,15 +94,6 @@ def change_token(request, pk):
     )
 
 
-"""
-def simulator(request):
-    return render(
-        request,
-        'student/simulator.html'
-    )
-"""
-
-
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)

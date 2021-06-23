@@ -4,8 +4,6 @@ from . import views
 from .views import LoginView
 
 urlpatterns = [
-    # path('simulador/', views.simulator, name='simulator'),
-
     path('login/', LoginView.as_view(), name='login'),
     path('register/', views.register, name='register'),
 
