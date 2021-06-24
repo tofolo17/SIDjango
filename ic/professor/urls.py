@@ -5,7 +5,7 @@ from .views import LoginView
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
-    path('register/', views.register, name='register'),
+    path('register/', views.register, name='register'),  # Esconder url de register
 
     path('', include('django.contrib.auth.urls')),
 

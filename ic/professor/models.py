@@ -9,8 +9,11 @@ class Conta(AbstractUser):
     """
     Anotações:
         Há outras informações a serem estendidas?
+            CPF
+            RG
+            Nome da mãe
     """
-    request_message = models.TextField(blank=True, verbose_name="Mensagem de solicitação")
+    request_message = models.TextField(blank=True, verbose_name="Mensagem de solicitação")  # Pop-up de instrução
     institution_name = models.CharField(blank=True, max_length=100, verbose_name="Nome da instituição de ensino")
 
     class Meta:
@@ -29,6 +32,7 @@ class Simulador(models.Model):
     Anotações:
         Revisar variáveis de conceitos;
         Achar tratamentos para os fields "table_dimensions" e links.
+        Limite de simulador por conta
     """
 
     profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

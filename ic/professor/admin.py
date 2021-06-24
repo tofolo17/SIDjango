@@ -17,6 +17,7 @@ def activate(modeladmin, request, queryset):
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[data.username]
         )
+        # Enviar justificativa se não for aceita
 
 
 @admin.action(description='Desativar Contas')
