@@ -8,7 +8,7 @@ from django.db import models
 class Conta(AbstractUser):
     """
     Anotações:
-        Há outras informações a serem estendidas?
+        Informações a serem estendidas
             CPF
             RG
             Nome da mãe
@@ -24,13 +24,12 @@ Conta._meta.get_field('email')._unique = True
 
 
 def get_token():
-    return secrets.token_urlsafe(16)
+    return secrets.token_urlsafe(12)
 
 
 class Simulador(models.Model):
     """
     Anotações:
-        Revisar variáveis de conceitos;
         Achar tratamentos para os fields "table_dimensions" e links.
         Limite de simulador por conta
     """

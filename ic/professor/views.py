@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
@@ -77,7 +78,7 @@ class SimulatorDeleteView(DeleteView):
 
 
 @login_required()
-def change_token(request, pk):
+def update_token(request, pk):
     status = None
     simulator = get_object_or_404(Simulador, pk=pk)
     if request.method == 'POST':
@@ -94,6 +95,15 @@ def change_token(request, pk):
     )
 
 
+def access_simulator(request, token):
+    simulator = get_object_or_404(Simulador, token=token)
+    return render(
+        request,
+        'simulator/simulator.html',
+        {'simulator': simulator}
+    )
+
+
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -107,6 +117,11 @@ def register(request):
             try:
                 validate_password(password, new_user)
                 new_user.set_password(password)
+                new_user.save()
+
+                group = Group.objects.get(name='Professor')
+                new_user.groups.add(group)
+
                 new_user.save()
 
                 send_mail(

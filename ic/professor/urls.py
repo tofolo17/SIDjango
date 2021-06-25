@@ -4,15 +4,17 @@ from . import views
 from .views import LoginView
 
 urlpatterns = [
-    path('login/', LoginView.as_view(), name='login'),
-    path('register/', views.register, name='register'),  # Esconder url de register
+    path('account/login/', LoginView.as_view(), name='login'),
+    path('account/register/', views.register, name='register'),
 
-    path('', include('django.contrib.auth.urls')),
+    path('account/', include('django.contrib.auth.urls')),
 
-    path('', views.SimulatorListView.as_view(), name='dashboard'),
-    path('create/', views.SimulatorCreateView.as_view(), name='create'),
-    path('<int:pk>', views.SimulatorDetailView.as_view(), name='detail'),
-    path('<int:pk>/update', views.SimulatorUpdateView.as_view(), name='update'),
-    path('<int:pk>/delete', views.SimulatorDeleteView.as_view(), name='delete'),
-    path('<int:pk>/change_token', views.change_token, name='change_token'),
+    path('account/', views.SimulatorListView.as_view(), name='dashboard'),
+    path('account/create/', views.SimulatorCreateView.as_view(), name='create'),
+    path('account/<int:pk>', views.SimulatorDetailView.as_view(), name='detail'),
+    path('account/<int:pk>/update', views.SimulatorUpdateView.as_view(), name='update'),
+    path('account/<int:pk>/delete', views.SimulatorDeleteView.as_view(), name='delete'),
+    path('account/<int:pk>/update_token', views.update_token, name='change_token'),
+
+    path('simulator/<str:token>', views.access_simulator, name='simulator')
 ]
