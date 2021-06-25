@@ -1,24 +1,22 @@
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from .forms import UserRegistrationForm, LoginForm
 from .models import Simulador, get_token
 
 
-@method_decorator(login_required, name='dispatch')
-class SimulatorListView(ListView):
+class SimulatorListView(LoginRequiredMixin, ListView):
     model = Simulador
     template_name = 'account/dashboard.html'
-    context_object_name = 'simulators'
 
     def get_context_data(self, **kwargs):
         context = super(SimulatorListView, self).get_context_data(**kwargs)
@@ -27,15 +25,17 @@ class SimulatorListView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
-class SimulatorDetailView(DetailView):
+class SimulatorDetailView(LoginRequiredMixin, DetailView):
     model = Simulador
     template_name = 'account/detail.html'
     context_object_name = 'simulator'
 
+    def get_queryset(self):
+        qs = super(SimulatorDetailView, self).get_queryset().filter(profile_id=self.request.user.id)
+        return qs
 
-@method_decorator(login_required, name='dispatch')
-class SimulatorCreateView(CreateView):
+
+class SimulatorCreateView(LoginRequiredMixin, CreateView):
     model = Simulador
     template_name = 'account/create.html'
     fields = (
@@ -53,8 +53,7 @@ class SimulatorCreateView(CreateView):
         return super(SimulatorCreateView, self).form_valid(form)
 
 
-@method_decorator(login_required, name='dispatch')
-class SimulatorUpdateView(UpdateView):
+class SimulatorUpdateView(LoginRequiredMixin, UpdateView):
     model = Simulador
     template_name = 'account/update.html'
     fields = (
@@ -66,21 +65,28 @@ class SimulatorUpdateView(UpdateView):
         'form_link'
     )
 
+    def get_queryset(self):
+        qs = super(SimulatorUpdateView, self).get_queryset().filter(profile_id=self.request.user.id)
+        return qs
+
     def get_success_url(self):
         return reverse_lazy('detail', kwargs={'pk': self.object.id})
 
 
-@method_decorator(login_required, name='dispatch')
-class SimulatorDeleteView(DeleteView):
+class SimulatorDeleteView(LoginRequiredMixin, DeleteView):
     model = Simulador
     template_name = 'account/delete.html'
     success_url = reverse_lazy('dashboard')
+
+    def get_queryset(self):
+        qs = super(SimulatorDeleteView, self).get_queryset().filter(profile_id=self.request.user.id)
+        return qs
 
 
 @login_required()
 def update_token(request, pk):
     status = None
-    simulator = get_object_or_404(Simulador, pk=pk)
+    simulator = get_object_or_404(Simulador, profile_id=request.user.id, pk=pk)
     if request.method == 'POST':
         simulator.token = get_token()
         simulator.save()
