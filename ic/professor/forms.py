@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import ValidationError
 
 from .models import Conta
 
@@ -36,6 +37,19 @@ class UserRegistrationForm(forms.ModelForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Email')
     error_messages = {
-        'invalid_login': "Test error message.",
-        'inactive': "This account is inactive.",
+        'invalid_login': "Deu ruim filho.",
+        'inactive': "Deu ruim mesmo.",
+        'not_allowed': "Real ruim."
     }
+
+    def confirm_login_allowed(self, user):
+        if not user.is_active:
+            raise ValidationError(
+                self.error_messages['inactive'],
+                code='inactive',
+            )
+        elif user.account_situation != "autorizado":
+            raise ValidationError(
+                self.error_messages['not_allowed'],
+                code='not_allowed',
+            )

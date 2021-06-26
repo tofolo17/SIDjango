@@ -2,7 +2,6 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
@@ -36,6 +35,11 @@ class SimulatorDetailView(LoginRequiredMixin, DetailView):
 
 
 class SimulatorCreateView(LoginRequiredMixin, CreateView):
+    """
+    Anotações:
+        Terminar método de limite
+            https://stackoverflow.com/questions/59462964/django-createview-only-allow-n-number-of-objects-created-redirect-if-limit-is
+    """
     model = Simulador
     template_name = 'account/create.html'
     fields = (
@@ -47,6 +51,9 @@ class SimulatorCreateView(LoginRequiredMixin, CreateView):
         'form_link'
     )
     success_url = reverse_lazy('dashboard')
+
+    def is_limit_reached(self):
+        pass
 
     def form_valid(self, form):
         form.instance.profile = self.request.user
@@ -115,19 +122,11 @@ def register(request):
         user_form = UserRegistrationForm(request.POST)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
-
-            new_user.is_active = False
             new_user.username = user_form.cleaned_data['email']
-
             password = user_form.cleaned_data['password']
             try:
                 validate_password(password, new_user)
                 new_user.set_password(password)
-                new_user.save()
-
-                group = Group.objects.get(name='Professor')
-                new_user.groups.add(group)
-
                 new_user.save()
 
                 send_mail(

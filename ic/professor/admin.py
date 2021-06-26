@@ -17,7 +17,6 @@ def activate(modeladmin, request, queryset):
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[data.username]
         )
-        # Enviar justificativa se não for aceita
 
 
 @admin.action(description='Desativar Contas')
@@ -27,12 +26,12 @@ def disable(modeladmin, request, queryset):
 
 @admin.register(Conta)
 class AccountAdmin(auth_admin.UserAdmin):
-    list_filter = ['is_active']
-    list_display = ['email', 'first_name', 'last_name', 'is_active']
+    list_filter = ['account_situation']
+    list_display = ['email', 'first_name', 'last_name', 'account_situation']
     fieldsets = auth_admin.UserAdmin.fieldsets + (
-        ('Campos Personalizados', {'fields': ('request_message', 'institution_name')}),
+        ('Campos Personalizados', {'fields': ('request_message', 'institution_name', 'account_situation')}),
     )
-    actions = [activate, disable]
+    # actions = [activate, disable]
 
 
 @admin.register(Simulador)
