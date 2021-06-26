@@ -39,7 +39,8 @@ class LoginForm(AuthenticationForm):
     error_messages = {
         'invalid_login': "Deu ruim filho.",
         'inactive': "Deu ruim mesmo.",
-        'not_allowed': "Real ruim."
+        'not_allowed': "Real ruim.",
+        'pendent': "Segura a emoção"
     }
 
     def confirm_login_allowed(self, user):
@@ -48,8 +49,13 @@ class LoginForm(AuthenticationForm):
                 self.error_messages['inactive'],
                 code='inactive',
             )
-        elif user.account_situation != "autorizado":
+        elif user.account_situation == "não autorizado":
             raise ValidationError(
                 self.error_messages['not_allowed'],
                 code='not_allowed',
+            )
+        elif user.account_situation == "pendente":
+            raise ValidationError(
+                self.error_messages['pendent'],
+                code='pendent',
             )

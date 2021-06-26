@@ -22,6 +22,11 @@ class Conta(AbstractUser):
     request_message = models.TextField(blank=True, verbose_name="Mensagem de solicitação")  # Pop-up de instrução
     institution_name = models.CharField(blank=True, max_length=100, verbose_name="Nome da instituição de ensino")
     account_situation = models.CharField(blank=True, max_length=15, choices=SITUATION_CHOICES, default='pendente')
+    justification_template = models.TextField(
+        blank=True,
+        verbose_name="Justificativa para não autorização",
+        default="Desculpe, mas seu pedido foi negado."
+    )
 
     class Meta:
         verbose_name_plural = 'Contas'
