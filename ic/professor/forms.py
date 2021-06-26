@@ -20,8 +20,6 @@ class UserRegistrationForm(forms.ModelForm):
         self.fields['email'].required = True
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
-        self.fields['request_message'].required = True
-        self.fields['institution_name'].required = True
 
     class Meta:
         model = Conta

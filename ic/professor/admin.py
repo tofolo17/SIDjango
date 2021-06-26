@@ -45,4 +45,4 @@ class AccountAdmin(auth_admin.UserAdmin):
 
 @admin.register(Simulador)
 class SimulatorAdmin(admin.ModelAdmin):
-    list_display = ['profile', 'title', 'token']
+    list_display = ['profile', 'title', 'token', 'private']
