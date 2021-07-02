@@ -168,3 +168,4 @@ def register(request):
 class LoginView(auth_views.LoginView):
     form_class = LoginForm
     template_name = 'account/login.html'
+    extra_context = {'active': 'login'}

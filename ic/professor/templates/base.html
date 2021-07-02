@@ -1,23 +1,133 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>App Name - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
-<div id="header">
-    <span class="user">
-        {% if request.user.is_authenticated %}
-        Hello {{ request.user.first_name }},
-        <a href="{% url 'logout' %}">Logout</a>
-        {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        {% endif %}
-    </span>
-</div>
-<div id="content">
+
+<body style="font-family: ABeeZee, sans-serif;">
+
+<nav class="navbar navbar-light navbar-expand-md" style="padding-left: 0;padding-right: 0;padding-top: 8px;">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-left" href="#" style="--color: #FF99C8">First Item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-left" href="#" style="--color: #FCF6BD">Second Item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-left" href="#" style="--color: #D0F4DE;">Explorar</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mx-auto order-0">
+            <a class="navbar-brand text-center" style="margin: 0;" href="#">App Name</a>
+        </div>
+        <div class="collapse navbar-collapse w-100 order-3 dual-collapse">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if active == 'login' %}active{% endif %} text-left" href="#"
+                       style="{% if active == 'login' %}--active-color{% else %}--color{% endif %}:#A9DEF9">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none"
+                             style="margin: 0 0 1px 0;">
+                            <path d="M15.4857 20H19.4857C20.5903 20 21.4857 19.1046 21.4857 18V6C21.4857 4.89543 20.5903 4 19.4857 4H15.4857V6H19.4857V18H15.4857V20Z"
+                                  fill="currentColor"></path>
+                            <path d="M10.1582 17.385L8.73801 15.9768L12.6572 12.0242L3.51428 12.0242C2.96199 12.0242 2.51428 11.5765 2.51428 11.0242C2.51429 10.4719 2.962 10.0242 3.51429 10.0242L12.6765 10.0242L8.69599 6.0774L10.1042 4.6572L16.4951 10.9941L10.1582 17.385Z"
+                                  fill="currentColor"></path>
+                        </svg>
+                        &nbsp;Entrar
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-left" href="#" style="--color: #E4C1F9">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none"
+                             style="margin: 0 0 1px 0;">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M8 11C10.2091 11 12 9.20914 12 7C12 4.79086 10.2091 3 8 3C5.79086 3 4 4.79086 4 7C4 9.20914 5.79086 11 8 11ZM8 9C9.10457 9 10 8.10457 10 7C10 5.89543 9.10457 5 8 5C6.89543 5 6 5.89543 6 7C6 8.10457 6.89543 9 8 9Z"
+                                  fill="currentColor"></path>
+                            <path d="M11 14C11.5523 14 12 14.4477 12 15V21H14V15C14 13.3431 12.6569 12 11 12H5C3.34315 12 2 13.3431 2 15V21H4V15C4 14.4477 4.44772 14 5 14H11Z"
+                                  fill="currentColor"></path>
+                            <path d="M18 7H20V9H22V11H20V13H18V11H16V9H18V7Z" fill="currentColor"></path>
+                        </svg>
+                        &nbsp;Registrar
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <button data-target=".dual-collapse" data-toggle="collapse" class="navbar-toggler mx-auto">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+
+<hr style="margin-top: 0;">
+
+<div class="container d-xl-flex align-items-xl-center body-container">
     {% block content %}
     {% endblock %}
 </div>
+
+<footer>
+    <hr style="margin-top: 16px;margin-bottom: 0;">
+    <div class="container" style="margin-bottom: 0;margin-top: 0;">
+        <div class="row">
+            <div class="col">
+                <ul class="list-unstyled" style="margin-bottom: 8px;margin-top: 8px;">
+                    <li class="text-center d-lg-flex justify-content-lg-start">
+                        <i class="far fa-envelope d-lg-flex align-items-lg-center"></i>
+                        &nbsp; email@email.com
+                    </li>
+                    <li class="text-center d-lg-flex justify-content-lg-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"
+                             fill="currentColor" class="bi bi-telephone d-lg-flex align-items-lg-center">
+                            <path fill-rule="evenodd"
+                                  d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z">
+                            </path>
+                        </svg>
+                        &nbsp; 11 9 9999-8888
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 align-self-center" style="font-size: 12px;">
+                <div class="row">
+                    <div class="col text-center">
+                        <span><u>Termos</u> e <u>Condições</u></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center"><span><i class="far fa-copyright"></i> 2021 - Company Name</span></div>
+                </div>
+            </div>
+            <div class="col d-flex d-lg-flex justify-content-center justify-content-lg-end align-items-lg-center">
+                <span class="hover-icon" style="margin-top: 8px;margin-bottom: 8px;">
+                    <u>Voltar ao topo</u> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none"
+                         style="margin: 0 0 1px 0;">
+                        <path d="M14.8285 11.9481L16.2427 10.5339L12 6.29122L7.7574 10.5339L9.17161 11.9481L11 10.1196V17.6568H13V10.1196L14.8285 11.9481Z"
+                              fill="currentColor"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M19.7782 4.22183C15.4824 -0.0739415 8.51759 -0.0739422 4.22183 4.22183C-0.0739415 8.51759 -0.0739422 15.4824 4.22183 19.7782C8.51759 24.0739 15.4824 24.0739 19.7782 19.7782C24.0739 15.4824 24.0739 8.51759 19.7782 4.22183ZM18.364 5.63604C14.8492 2.12132 9.15076 2.12132 5.63604 5.63604C2.12132 9.15076 2.12132 14.8492 5.63604 18.364C9.15076 21.8787 14.8492 21.8787 18.364 18.364C21.8787 14.8492 21.8787 9.15076 18.364 5.63604Z"
+                              fill="currentColor"></path>
+                    </svg>
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
+
 </html>

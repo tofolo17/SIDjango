@@ -1,0 +1,67 @@
+/* body and html */
+html, body {
+    height: 100%;
+}
+
+/* navbar */
+.mx-auto .nav-link {
+    padding-left: 13px !important;
+    padding-right: 13px !important;
+    padding-bottom: 2px;
+}
+
+.nav-link {
+    font-size: 15px !important;
+}
+
+.active::after {
+    content: "";
+    display: block;
+    border-bottom: solid 3px var(--active-color);
+    height: 2px;
+}
+
+.nav-link:not(.active)::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    border-bottom: solid 3px var(--color);
+    transition: width .3s;
+}
+
+.nav-link:not(.active):hover::after {
+    width: 100%;
+}
+
+/* hr */
+hr {
+    height: 1px;
+    width: 90%;
+    background: linear-gradient(90deg, #FF99C8, #FCF6BD 25%, #D0F4DE 50%, #A9DEF9 75%, #E4C1F9 100%);
+}
+
+/* footer */
+footer span, li {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 14px !important;
+}
+
+u, hover-icon {
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+u:hover, .hover-icon:hover {
+    color: rgba(0, 0, 0, .7);
+}
+
+/* content container */
+.body-container {
+    height: 84%;
+}
+
+.login-row {
+    width: 80%;
+    margin: auto;
+}

@@ -33,7 +33,7 @@ class UserRegistrationForm(forms.ModelForm):
 
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(label='Email')
+    username = forms.CharField(label='E-mail')
     error_messages = {
         'invalid_login': "Deu ruim filho.",
         'inactive': "Deu ruim mesmo.",
