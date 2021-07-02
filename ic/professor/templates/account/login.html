@@ -4,54 +4,20 @@
 
 {% block content %}
 <div class="row login-row">
-    <div class="col-md-6" style="padding-right: 0;padding-left: 0;">
-        <h2>Identificação</h2>
-
-        {% load widget_tweaks %}
-
-        <form action="/account/login/" method="post">
-            {% csrf_token %}
-
-            {% for hidden_field in form.hidden_fields %}
-            {{ hidden_field }}
-            {% endfor %}
-
-            {% if form.non_field_errors %}
-            <div class="alert alert-danger" role="alert">
-                {% for error in form.non_field_errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            {% for field in form.visible_fields %}
-            <div class="form-group">
-                {{ field.label_tag }}
-
-                {% if form.is_bound %}
-                {% if field.errors %}
-                {% render_field field class="form-control is-invalid" %}
-                {% for error in field.errors %}
-                <div class="invalid-feedback">
-                    {{ error }}
-                </div>
-                {% endfor %}
-                {% else %}
-                {% render_field field class="form-control is-valid" %}
-                {% endif %}
-                {% else %}
-                {% render_field field class="form-control" %}
-                {% endif %}
-
-                {% if field.help_text %}
-                <small class="form-text text-muted">{{ field.help_text }}</small>
-                {% endif %}
-            </div>
-            {% endfor %}
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <div class="col-md-6 order-md-0 order-1" style="padding-right: 0;padding-left: 0;">
+        <div class="p-md-5 p-3">
+            <h2>Identificação</h2>
+            <form action="/account/login/" method="post">
+                {% csrf_token %}
+                {% include 'includes/bs4_form.html' with form=form %}
+                <button class="btn btn-light" style="width: 100%" type="submit">Entrar</button>
+            </form>
+        </div>
     </div>
-    <div class="col-md-6" style="padding-right: 0;padding-left: 0;"></div>
+    <div class="col-md-6 order-md-1 order-0" style="padding-right: 0;padding-left: 0;">
+        <div style="height: 100%;width: 100%;background: linear-gradient(-45deg, #A9DEF9, #E4C1F9 100%);">
+
+        </div>
+    </div>
 </div>
 {% endblock %}
