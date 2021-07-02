@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Explore</h1>
+{% for simulator in simulators %}
+<p>
+    {{ simulator.title }}
+</p>
+{% empty %}
+There are no similar posts yet.
+{% endfor %}
+{% endblock %}

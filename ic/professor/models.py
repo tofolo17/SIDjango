@@ -3,6 +3,7 @@ import secrets
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from taggit.managers import TaggableManager
 
 
 class Conta(AbstractUser):
@@ -43,7 +44,10 @@ class Simulador(models.Model):
     Anotações:
         Achar tratamentos para os fields "table_dimensions" e links.
         Limite de simulador por conta
+        Tags
+            https://stackoverflow.com/questions/48086513/django-taggit-display-existing-tags-on-the-django-admin-add-record-page
     """
+    tags = TaggableManager()  # Help message
 
     profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
@@ -60,7 +64,7 @@ class Simulador(models.Model):
     updated = models.DateTimeField(auto_now=True)
     token = models.TextField(max_length=16, default=get_token, unique=True)
 
-    private = models.BooleanField(default=False)
+    private = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = 'Simuladores'

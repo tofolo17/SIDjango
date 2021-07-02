@@ -13,6 +13,17 @@ from .forms import UserRegistrationForm, LoginForm
 from .models import Simulador, get_token
 
 
+class ExploreSimulatorListView(ListView):
+    model = Simulador
+    template_name = 'simulator/explore.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ExploreSimulatorListView, self).get_context_data(**kwargs)
+        simulators = self.get_queryset().filter(private=False)
+        context['simulators'] = simulators
+        return context
+
+
 class SimulatorListView(LoginRequiredMixin, ListView):
     model = Simulador
     template_name = 'account/dashboard.html'
@@ -44,11 +55,13 @@ class SimulatorCreateView(LoginRequiredMixin, CreateView):
     template_name = 'account/create.html'
     fields = (
         'title',
+        'tags',
         'required_concepts',
         'minimum_concepts',
         'table_dimensions',
         'youtube_link',
-        'form_link'
+        'form_link',
+        'private'
     )
     success_url = reverse_lazy('dashboard')
 
