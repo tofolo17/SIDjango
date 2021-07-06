@@ -32,13 +32,18 @@ class UserRegistrationForm(forms.ModelForm):
         return cd['password2']
 
 
+mais_info = " Para mais informações, entre em contato conosco pelos meios anexados ao rodapé do site."
+
+
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='E-mail')
     error_messages = {
-        'invalid_login': "Deu ruim filho.",
-        'inactive': "Deu ruim mesmo.",
-        'not_allowed': "Real ruim.",
-        'pendent': "Segura a emoção"
+        'invalid_login': "Por favor, insira um email e senha válidos. Atente-se a inserção de caracteres maiúsculos e "
+                         "minúsculos.",
+        'inactive': "Essa conta está desativada." + mais_info,
+        'not_allowed': "Seu pedido de utilização foi negado. Uma justificativa foi encaminhada ao seu endereço de "
+                       "e-mail." + mais_info,
+        'pendent': "Seu pedido de utilização ainda não foi aceito." + mais_info
     }
 
     def confirm_login_allowed(self, user):

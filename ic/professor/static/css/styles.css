@@ -11,7 +11,7 @@ html, body {
 }
 
 .nav-link {
-    font-size: 15px !important;
+    font-size: 15px;
 }
 
 .active::after {
@@ -42,17 +42,24 @@ hr {
 }
 
 /* footer */
-footer span, li {
+footer {
     color: rgba(0, 0, 0, 0.5);
-    font-size: 14px !important;
+    font-size: 14px;
 }
 
-u, hover-icon {
+/* links */
+.bold-link a {
+    font-weight: bold;
+    color: black;
+}
+
+a:link, .dark-link {
     cursor: pointer;
     transition: 0.1s;
+    text-decoration: none;
 }
 
-u:hover, .hover-icon:hover {
+.dark-link:hover {
     color: rgba(0, 0, 0, .7);
 }
 
@@ -80,12 +87,25 @@ u:hover, .hover-icon:hover {
     .login-row {
         width: 100%;
     }
+
+    .body-container {
+        height: auto;
+    }
+}
+
+.y-pd {
+    padding-top: var(--r);
+    padding-bottom: var(--r);
 }
 
 /* forms */
 label {
     margin-bottom: 0;
-    margin-top: 1rem
+    margin-top: 1.5rem
+}
+
+.form-group {
+    margin-bottom: 0;
 }
 
 .form-control {
@@ -96,6 +116,30 @@ label {
 
 .form-control:focus {
     box-shadow: none;
-    border-bottom: 1px solid;
-    border-color: rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+/* buttons */
+.btn-rounded {
+    border-style: solid;
+    border-radius: 20px;
+    color: white;
+    width: 100%;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    transition: 0.3s;
+}
+
+.btn-rounded:hover {
+    transform: scale(1.05);
+    color: white;
+}
+
+.btn-gradient {
+    background: linear-gradient(-45deg, #81cff6, #d298f5 100%);;
+}
+
+.btn-transparent {
+    border-color: white;
+    background-color: transparent;
 }

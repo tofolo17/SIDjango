@@ -3,6 +3,7 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+
 <div class="row login-row">
     <div class="col-md-6 order-md-0 order-1" style="padding-right: 0;padding-left: 0;">
         <div class="p-md-5 p-3">
@@ -10,14 +11,54 @@
             <form action="/account/login/" method="post">
                 {% csrf_token %}
                 {% include 'includes/bs4_form.html' with form=form %}
-                <button class="btn btn-light" style="width: 100%" type="submit">Entrar</button>
+                <div class="row y-pd" style="font-size: 14px; --r: 1rem;">
+                    <div class="col">
+                        <input id="toggle_visibility" onclick="toggleVisibility()" type="checkbox"/> Exibir senha
+                    </div>
+                    <div class="col">
+                        <a href="/account/password_reset">Esqueceu sua senha?</a>
+                    </div>
+                </div>
+                <button class="btn btn-rounded btn-gradient" type="submit">Entrar</button>
             </form>
+            <div class="text-center bold-link" style="font-size: 0.7rem; padding-top: 0.7rem;">
+                Ao continuar, você concorda com os <a href="#">Termos de Serviço</a> do App Name e
+                confirma que leu a nossa <a href="#">Política de Privacidade</a>.
+            </div>
         </div>
     </div>
     <div class="col-md-6 order-md-1 order-0" style="padding-right: 0;padding-left: 0;">
-        <div style="height: 100%;width: 100%;background: linear-gradient(-45deg, #A9DEF9, #E4C1F9 100%);">
-
+        <div class="d-xl-flex align-items-xl-center"
+             style="height: 100%;width: 100%;background: linear-gradient(-45deg, #81cff6, #d298f5 100%); color: white;">
+            <div class="col text-center p-md-5 p-3">
+                <div class="row y-pd" style="--r: 0.5rem;">
+                    <div class="col">
+                        <h5>Bem-vindo. Para entrar, preencha o formulário com seus dados cadastrais.</h5>
+                    </div>
+                </div>
+                <div class="row y-pd" style="--r: 0.5rem;">
+                    <div class="col">
+                        <h6>Não possui uma conta?</h6>
+                    </div>
+                </div>
+                <div class="row y-pd" style="--r: 0.5rem;">
+                    <div class="col">
+                        <a class="btn btn-rounded btn-transparent" href="/account/register/">Crie uma!</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    function toggleVisibility() {
+        const x = document.getElementById("id_password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 {% endblock %}
