@@ -1,0 +1,54 @@
+{% load widget_tweaks %}
+
+{% for hidden_field in form.hidden_fields %}
+{{ hidden_field }}
+{% endfor %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<div class="text-justify" style="font-size: 0.95rem;">
+    {{ error }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="form-row">
+    <div class="col">
+        <div class="form-group">
+            {{ form.first_name.label_tag }}
+            {% render_field form.first_name class="form-control" %}
+        </div>
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {% render_field form.email class="form-control" %}
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-group">
+            {{ form.last_name.label_tag }}
+            {% render_field form.last_name class="form-control" %}
+        </div>
+        <div class="form-group">
+            {{ form.institution_name.label_tag }}
+            {% render_field form.institution_name class="form-control" %}
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    {{ form.request_message.label_tag }}
+    {% render_field form.request_message class="form-control" %}
+</div>
+<div class="form-row">
+    <div class="col">
+        <div class="form-group">
+            {{ form.password.label_tag }}
+            {% render_field form.password class="form-control" %}
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-group">
+            {{ form.password2.label_tag }}
+            {% render_field form.password2 class="form-control" %}
+        </div>
+    </div>
+</div>

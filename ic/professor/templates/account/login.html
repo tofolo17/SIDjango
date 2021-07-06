@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Entrar{% endblock %}
 
 {% block content %}
 
@@ -10,8 +10,8 @@
             <h2>Identificação</h2>
             <form action="/account/login/" method="post">
                 {% csrf_token %}
-                {% include 'includes/bs4_form.html' with form=form %}
-                <div class="row y-pd" style="font-size: 14px; --r: 1rem;">
+                {% include 'includes/bs4_login_form.html' with form=form %}
+                <div class="row y-pd f-14" style="--r: 1rem;">
                     <div class="col">
                         <input id="toggle_visibility" onclick="toggleVisibility()" type="checkbox"/> Exibir senha
                     </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="row y-pd" style="--r: 0.5rem;">
                     <div class="col">
-                        <a class="btn btn-rounded btn-transparent" href="/account/register/">Crie uma!</a>
+                        <a class="btn btn-rounded btn-transparent" href="/account/register/">Cadastre-se</a>
                     </div>
                 </div>
             </div>

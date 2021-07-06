@@ -36,7 +36,8 @@
         <div class="collapse navbar-collapse w-100 order-3 dual-collapse">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link {% if active == 'login' %}active{% endif %} text-left" href="#"
+                    <a href="/account/login/"
+                       class="nav-link {% if active == 'login' %}active{% endif %} text-left"
                        style="{% if active == 'login' %}--active-color{% else %}--color{% endif %}:#A9DEF9">
                         <svg fill="none" height="1em" style="margin: 0 0 1px 0;" viewBox="0 0 24 24" width="1em"
                              xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +50,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-left" href="#" style="--color: #E4C1F9">
+                    <a href="/account/register/"
+                       class="nav-link {% if active == 'register' %}active{% endif %} text-left"
+                       style="{% if active == 'register' %}--active-color{% else %}--color{% endif %}:#E4C1F9">
                         <svg fill="none" height="1em" style="margin: 0 0 1px 0;" viewBox="0 0 24 24" width="1em"
                              xmlns="http://www.w3.org/2000/svg">
                             <path clip-rule="evenodd"
@@ -79,7 +82,7 @@
     {% endblock %}
 </div>
 
-<footer>
+<footer class="f-14 c-o-05">
     <hr style="margin-top: 16px;margin-bottom: 0;">
     <div class="container" style="margin-bottom: 0;margin-top: 0;">
         <div class="row">
@@ -112,7 +115,7 @@
                 </div>
             </div>
             <div class="col d-flex d-lg-flex justify-content-center justify-content-lg-end align-items-lg-center">
-                <span class="dark-link" style="margin-top: 8px;margin-bottom: 8px;">
+                <span class="dark-link" style="margin-top: 8px;margin-bottom: 8px;" onclick="scrollToTop()">
                     Voltar ao topo 
                     <svg fill="none" height="1em" style="margin: 0 0 1px 0;" viewBox="0 0 24 24" width="1em"
                          xmlns="http://www.w3.org/2000/svg">
@@ -131,6 +134,12 @@
 
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script>
+    function scrollToTop() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+</script>
+
 </body>
 
 </html>
