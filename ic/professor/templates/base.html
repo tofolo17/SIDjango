@@ -35,9 +35,26 @@
         </div>
         <div class="collapse navbar-collapse w-100 order-3 dual-collapse">
             <ul class="navbar-nav mx-auto">
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="/account/login/"
-                       class="nav-link {% if active == 'login' %}active{% endif %} text-left"
+                    <a class="nav-link text-left" href="#" style="--color: #A9DEF9">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-left" href="/account/logout/" style="--color: #E4C1F9;">
+                        <svg fill="none" height="1em" style="margin: 0 0 1px 0;" viewBox="0 0 24 24" width="1em"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.51428 20H4.51428C3.40971 20 2.51428 19.1046 2.51428 18V6C2.51428 4.89543 3.40971 4 4.51428 4H8.51428V6H4.51428V18H8.51428V20Z"
+                                  fill="currentColor"></path>
+                            <path d="M13.8418 17.385L15.262 15.9768L11.3428 12.0242L20.4857 12.0242C21.038 12.0242 21.4857 11.5765 21.4857 11.0242C21.4857 10.4719 21.038 10.0242 20.4857 10.0242L11.3236 10.0242L15.304 6.0774L13.8958 4.6572L7.5049 10.9941L13.8418 17.385Z"
+                                  fill="currentColor"></path>
+                        </svg>
+                        Sair
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link {% if active == 'login' %}active{% endif %} text-left"
+                       href="/account/login/"
                        style="{% if active == 'login' %}--active-color{% else %}--color{% endif %}:#A9DEF9">
                         <svg fill="none" height="1em" style="margin: 0 0 1px 0;" viewBox="0 0 24 24" width="1em"
                              xmlns="http://www.w3.org/2000/svg">
@@ -50,8 +67,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/account/register/"
-                       class="nav-link {% if active == 'register' %}active{% endif %} text-left"
+                    <a class="nav-link {% if active == 'register' %}active{% endif %} text-left"
+                       href="/account/register/"
                        style="{% if active == 'register' %}--active-color{% else %}--color{% endif %}:#E4C1F9">
                         <svg fill="none" height="1em" style="margin: 0 0 1px 0;" viewBox="0 0 24 24" width="1em"
                              xmlns="http://www.w3.org/2000/svg">
@@ -66,6 +83,7 @@
                         &nbsp;Registrar
                     </a>
                 </li>
+                {% endif %}
             </ul>
         </div>
         <button class="navbar-toggler mx-auto" data-target=".dual-collapse" data-toggle="collapse">
@@ -77,7 +95,7 @@
 
 <hr style="margin-top: 0;">
 
-<div class="container d-md-flex align-items-md-center body-container">
+<div class="container d-flex align-items-center body-container">
     {% block content %}
     {% endblock %}
 </div>
@@ -115,7 +133,7 @@
                 </div>
             </div>
             <div class="col d-flex d-lg-flex justify-content-center justify-content-lg-end align-items-lg-center">
-                <span class="dark-link" style="margin-top: 8px;margin-bottom: 8px;" onclick="scrollToTop()">
+                <span class="dark-link" onclick="scrollToTop()" style="margin-top: 8px;margin-bottom: 8px;">
                     Voltar ao topo 
                     <svg fill="none" height="1em" style="margin: 0 0 1px 0;" viewBox="0 0 24 24" width="1em"
                          xmlns="http://www.w3.org/2000/svg">

@@ -20,7 +20,10 @@ class Conta(AbstractUser):
         ('não autorizado', 'Não autorizado')
     )
 
-    request_message = models.TextField(verbose_name="Mensagem de solicitação")  # Pop-up de instrução
+    request_message = models.TextField(
+        verbose_name="Mensagem de solicitação",
+        help_text="Mensagem de instrução aqui."
+    )
     institution_name = models.CharField(max_length=100, verbose_name="Instituição de ensino")
     account_situation = models.CharField(max_length=15, choices=SITUATION_CHOICES, default='pendente')
     justification_template = models.TextField(

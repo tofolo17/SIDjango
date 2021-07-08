@@ -59,6 +59,8 @@ hr {
 .bold-link a {
     font-weight: bold;
     color: black;
+    font-size: 0.7rem;
+    padding-top: 0.7rem;
 }
 
 a:link, .dark-link {
@@ -73,17 +75,17 @@ a:link, .dark-link {
 
 /* container */
 .body-container {
-    height: 84%;
+    min-height: 84%;
 }
 
-.login-row, .register-row {
+.regular-row, .no-border-row {
     width: 80%;
     margin: auto;
 }
 
 /* media queries */
 @media (min-width: 768px) {
-    .login-row {
+    .regular-row {
         box-shadow: 0 0 10px 0 rgba(128, 128, 128, 0.25);
     }
 }
@@ -93,7 +95,7 @@ a:link, .dark-link {
         font-size: 1.5rem;
     }
 
-    .login-row, .register-row {
+    .regular-row {
         width: 100%;
     }
 
@@ -120,6 +122,14 @@ a:link, .dark-link {
     border-bottom: 1px solid rgba(0, 0, 0, 0.7);
 }
 
+.form-group label {
+    margin-bottom: 0;
+}
+
+.form-group textarea {
+    height: 5rem;
+}
+
 /* buttons */
 .btn-rounded {
     border-style: solid;
@@ -137,7 +147,7 @@ a:link, .dark-link {
 }
 
 .btn-gradient {
-    background: linear-gradient(-45deg, #81cff6, #d298f5 100%);;
+    background: linear-gradient(-45deg, var(--c-1), var(--c-2) 100%);;
 }
 
 .btn-transparent {

@@ -1,10 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Logged out{% endblock %}
+{% block title %}Sair{% endblock %}
 
 {% block content %}
-<h1>Logged out</h1>
-<p>
-    You have been successfully logged out. You can <a href='{% url "login" %}'>login again</a>.
-</p>
+<div class="row no-border-row">
+    <div class="col-md-12">
+        <div class="p-md-5 p-1">
+            <div class="row">
+                <h2>Desconectado</h2>
+            </div>
+            <div class="row">
+                <p>
+                    Você foi desconectado com sucesso. Você pode <a href='{% url "login" %}'>entrar novamente</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
