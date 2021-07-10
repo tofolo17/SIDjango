@@ -1,8 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}Bem-vindo{% endblock %}
 
 {% block content %}
-<h1>Welcome {{ new_user.first_name }}!</h1>
-<p>Your account has been successfully created. Now you can <a href="{% url 'login' %}">login</a>.</p>
+<div class="row no-border-row">
+    <div class="col-md-12">
+        <div class="p-md-5 p-1">
+            <h2>Welcome {{ new_user.first_name }}!</h2>
+            <p>
+                Sua conta foi criada com sucesso. Agora você pode <a href="{% url 'login' %}">se conectar</a>.
+            </p>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from .forms import UserRegistrationForm, LoginForm
-from .models import Simulador, get_token
+from .models import Simulador, get_token, Conta
 
 
 class ExploreSimulatorListView(ListView):
@@ -26,7 +26,7 @@ class ExploreSimulatorListView(ListView):
 
 class SimulatorListView(LoginRequiredMixin, ListView):
     model = Simulador
-    template_name = 'account/dashboard.html'
+    template_name = 'simulator/dashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super(SimulatorListView, self).get_context_data(**kwargs)
@@ -37,7 +37,7 @@ class SimulatorListView(LoginRequiredMixin, ListView):
 
 class SimulatorDetailView(LoginRequiredMixin, DetailView):
     model = Simulador
-    template_name = 'account/detail.html'
+    template_name = 'simulator/detail.html'
     context_object_name = 'simulator'
 
     def get_queryset(self):
@@ -52,7 +52,7 @@ class SimulatorCreateView(LoginRequiredMixin, CreateView):
             https://stackoverflow.com/questions/59462964/django-createview-only-allow-n-number-of-objects-created-redirect-if-limit-is
     """
     model = Simulador
-    template_name = 'account/create.html'
+    template_name = 'simulator/create.html'
     fields = (
         'title',
         'tags',
@@ -75,7 +75,7 @@ class SimulatorCreateView(LoginRequiredMixin, CreateView):
 
 class SimulatorUpdateView(LoginRequiredMixin, UpdateView):
     model = Simulador
-    template_name = 'account/update.html'
+    template_name = 'simulator/update.html'
     fields = (
         'title',
         'required_concepts',
@@ -93,9 +93,22 @@ class SimulatorUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('detail', kwargs={'pk': self.object.id})
 
 
+class AccountUpdateView(UpdateView):
+    model = Conta
+    template_name = 'account/update.html'
+    fields = (
+        'first_name',
+    )
+    success_url = '/account/'
+
+    def get_queryset(self):
+        qs = super(AccountUpdateView, self).get_queryset().filter(id=self.request.user.id)
+        return qs
+
+
 class SimulatorDeleteView(LoginRequiredMixin, DeleteView):
     model = Simulador
-    template_name = 'account/delete.html'
+    template_name = 'simulator/delete.html'
     success_url = reverse_lazy('dashboard')
 
     def get_queryset(self):
@@ -113,7 +126,7 @@ def update_token(request, pk):
         status = "Ok"
     return render(
         request,
-        'account/change_token.html',
+        'simulator/change_token.html',
         {
             'simulator': simulator,
             'status': status

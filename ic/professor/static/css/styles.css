@@ -5,8 +5,8 @@ html, body {
 
 /* navbar */
 .mx-auto .nav-link {
-    padding-left: 13px !important;
-    padding-right: 13px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
     padding-bottom: 2px;
 }
 
