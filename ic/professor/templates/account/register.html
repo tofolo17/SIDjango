@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <div class="p-md-5 p-1">
             <h2>Registre-se</h2>
-            <form action="/account/register/" method="post">
+            <form action="" method="post">
                 {% csrf_token %}
                 {% include 'includes/bs4_register_form.html' with form=user_form %}
                 <button class="btn btn-rounded btn-gradient" style="--c-1: #d298f5; --c-2: #81cff6" type="submit">

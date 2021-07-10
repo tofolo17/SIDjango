@@ -154,3 +154,8 @@ a:link, .dark-link {
     border-color: white;
     background-color: transparent;
 }
+
+/* p */
+p, .alert-danger {
+    text-align: justify;
+}

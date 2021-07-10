@@ -1,19 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Sair{% endblock %}
+{% block title %}Desconectado{% endblock %}
 
 {% block content %}
 <div class="row no-border-row">
     <div class="col-md-12">
         <div class="p-md-5 p-1">
-            <div class="row">
-                <h2>Desconectado</h2>
-            </div>
-            <div class="row">
-                <p>
-                    Você foi desconectado com sucesso. Você pode <a href='{% url "login" %}'>entrar novamente</a>.
-                </p>
-            </div>
+            <h2>Desconectado</h2>
+            <p>
+                Você foi desconectado com sucesso. Você pode <a href='{% url "login" %}'>entrar novamente</a>.
+            </p>
         </div>
     </div>
 </div>
