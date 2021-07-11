@@ -40,7 +40,9 @@
                     <a class="nav-link text-left" href="#" style="--color: #D0F4DE">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-left" href="/account/profile/{{request.user.id}}/" style="--color: #A9DEF9">
+                    <a class="nav-link {% if active == 'profile' %}active{% endif %} text-left"
+                       href="/account/profile/{{request.user.id}}/"
+                       style="{% if active == 'profile' %}--active-color{% else %}--color{% endif %}:#A9DEF9">
                         <svg fill="none" height="1em" style="margin: 0 0 2px 0;" viewBox="0 0 24 24"
                              width="1em" xmlns="http://www.w3.org/2000/svg">
                             <path clip-rule="evenodd"

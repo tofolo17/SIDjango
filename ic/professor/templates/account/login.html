@@ -11,7 +11,7 @@
             <form action="" method="post">
                 {% csrf_token %}
                 {% include 'includes/bs4_default_form.html' with form=form %}
-                <div class="row y-pd f-14" style="--r: 1rem;">
+                <div class="row f-14" style="padding-bottom: 1rem;">
                     <div class="col">
                         <input id="toggle_visibility" onclick="toggleVisibility()" type="checkbox"/> Exibir senha
                     </div>
@@ -19,7 +19,7 @@
                         <a href="/account/password_reset">Esqueceu sua senha?</a>
                     </div>
                 </div>
-                <button class="btn btn-rounded btn-gradient" style="--c-1: #81cff6; --c-2: #d298f5" type="submit">
+                <button class="btn btn-rounded btn-gradient" style="--c-1: #d298f5; --c-2: #81cff6" type="submit">
                     Entrar
                 </button>
             </form>
@@ -31,7 +31,7 @@
     </div>
     <div class="col-md-6 order-md-1 order-0" style="padding-right: 0;padding-left: 0;">
         <div class="d-xl-flex align-items-xl-center"
-             style="height: 100%;width: 100%;background: linear-gradient(-45deg, #81cff6, #d298f5 100%); color: white;">
+             style="height: 100%;width: 100%;background: linear-gradient(-45deg, #d298f5, #81cff6 100%); color: white;">
             <div class="col text-center p-md-5 p-3">
                 <div class="row y-pd" style="--r: 0.5rem;">
                     <div class="col">

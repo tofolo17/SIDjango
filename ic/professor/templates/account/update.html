@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Atualizar simulador{% endblock %}
+{% block title %}Perfil{% endblock %}
 
 {% block content %}
-<h1>Atualizar simulador</h1>
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Update</button>
-</form>
+<div class="row regular-row">
+    <div class="col-md-12">
+        <div class="p-md-5 p-1">
+            <h2>Seu perfil</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                {% include 'includes/bs4_profile_form.html' with form=form %}
+                <button class="btn btn-rounded btn-gradient" style="--c-1: #d298f5; --c-2: #81cff6" type="submit">
+                    Atualizar
+                </button>
+            </form>
+            <div class="text-center" style="padding-top: 1rem;">
+                Precisa de uma senha mais forte? <a href="/account/password_change/">Altere-a.</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

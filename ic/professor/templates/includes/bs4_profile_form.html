@@ -1,0 +1,24 @@
+{% load widget_tweaks %}
+
+{% for hidden_field in form.hidden_fields %}
+{{ hidden_field }}
+{% endfor %}
+
+{% if form.non_field_errors %}
+<div class="alert alert-danger" role="alert">
+    {% for error in form.non_field_errors %}
+    {{ error }}
+    {% endfor %}
+</div>
+{% endif %}
+
+{% for field in form.visible_fields %}
+<div class="form-group">
+    {% if field.name == "request_message" or field.name == "institution_name" %}
+    {{ field.label_tag }}
+    {{ field|attr:"readonly"|attr:"class:form-control" }}
+    {% else %}
+    {% include 'includes/field_handling.html' with form=form field=field %}
+    {% endif %}
+</div>
+{% endfor %}

@@ -46,11 +46,10 @@ class Simulador(models.Model):
     """
     Anotações:
         Achar tratamentos para os fields "table_dimensions" e links.
-        Limite de simulador por conta
         Tags
             https://stackoverflow.com/questions/48086513/django-taggit-display-existing-tags-on-the-django-admin-add-record-page
     """
-    tags = TaggableManager()  # Help message
+    tags = TaggableManager()
 
     profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 

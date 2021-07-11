@@ -98,8 +98,12 @@ class AccountUpdateView(UpdateView):
     template_name = 'account/update.html'
     fields = (
         'first_name',
+        'last_name',
+        'request_message',
+        'institution_name'
     )
     success_url = '/account/'
+    extra_context = {'active': 'profile'}
 
     def get_queryset(self):
         qs = super(AccountUpdateView, self).get_queryset().filter(id=self.request.user.id)
