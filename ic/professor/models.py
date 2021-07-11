@@ -22,7 +22,7 @@ class Conta(AbstractUser):
 
     request_message = models.TextField(
         verbose_name="Mensagem de solicitação",
-        help_text="Mensagem de instrução aqui."
+        help_text="Use este campo para informar os seus objetivos de uso, metas de aprendizado, e afins."
     )
     institution_name = models.CharField(max_length=100, verbose_name="Instituição de ensino")
     account_situation = models.CharField(max_length=15, choices=SITUATION_CHOICES, default='pendente')

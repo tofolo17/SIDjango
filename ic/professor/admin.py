@@ -6,6 +6,11 @@ from .models import *
 
 admin.site.site_url = '/account'
 
+"""
+Anotações:
+    Personalizar e-mails
+"""
+
 
 @admin.action(description='Autorizar Contas')
 def authorize(modeladmin, request, queryset):
@@ -24,7 +29,7 @@ def deauthorize(modeladmin, request, queryset):
     queryset.update(account_situation="não autorizado")
     for data in queryset:
         send_mail(
-            subject="Você foi autorizado",
+            subject="Você não foi autorizado",
             message=f"{data.justification_template}",
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[data.username]

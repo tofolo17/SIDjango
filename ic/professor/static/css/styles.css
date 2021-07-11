@@ -51,7 +51,7 @@ hr {
 }
 
 /* text color */
-.c-o-05 {
+.c-o-05, .list-group a {
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -65,11 +65,11 @@ hr {
 
 a:link, .dark-link {
     cursor: pointer;
-    transition: 0.1s;
+    transition: 0.5s;
     text-decoration: none;
 }
 
-.dark-link:hover {
+.dark-link:hover, .list-group a:hover {
     color: rgba(0, 0, 0, .7);
 }
 

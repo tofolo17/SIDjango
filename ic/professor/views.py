@@ -27,6 +27,7 @@ class ExploreSimulatorListView(ListView):
 class SimulatorListView(LoginRequiredMixin, ListView):
     model = Simulador
     template_name = 'simulator/dashboard.html'
+    extra_context = {'active': 'dashboard'}
 
     def get_context_data(self, **kwargs):
         context = super(SimulatorListView, self).get_context_data(**kwargs)

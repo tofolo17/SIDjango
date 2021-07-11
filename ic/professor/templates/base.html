@@ -37,7 +37,8 @@
             <ul class="navbar-nav mx-auto">
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link text-left" href="#" style="--color: #D0F4DE">Dashboard</a>
+                    <a class="nav-link {% if active == 'dashboard' %}active{% endif %} text-left" href="/account/"
+                       style="{% if active == 'dashboard' %}--active-color{% else %}--color{% endif %}:#D0F4DE">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if active == 'profile' %}active{% endif %} text-left"
@@ -172,6 +173,10 @@
     function scrollToTop() {
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
 
 </body>
