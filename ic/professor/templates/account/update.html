@@ -7,11 +7,12 @@
     <div class="col-md-12">
         <div class="p-md-5 p-1">
             <h2>Seu perfil</h2>
+            <p>Use o formulário abaixo para editar e ver detalhes de seu perfil.</p>
             <form action="" method="post">
                 {% csrf_token %}
                 {% include 'includes/bs4_profile_form.html' with form=form %}
                 <button class="btn btn-rounded btn-gradient" style="--c-1: #d298f5; --c-2: #81cff6" type="submit">
-                    Atualizar
+                    Salvar
                 </button>
             </form>
             <div class="text-center" style="padding-top: 1rem;">

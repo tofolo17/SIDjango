@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from .forms import UserRegistrationForm, LoginForm
 from .models import Simulador, get_token, Conta
@@ -34,16 +34,6 @@ class SimulatorListView(LoginRequiredMixin, ListView):
         simulators = self.get_queryset().filter(profile_id=self.request.user.id).order_by('-updated')
         context['simulators'] = simulators
         return context
-
-
-class SimulatorDetailView(LoginRequiredMixin, DetailView):
-    model = Simulador
-    template_name = 'simulator/detail.html'
-    context_object_name = 'simulator'
-
-    def get_queryset(self):
-        qs = super(SimulatorDetailView, self).get_queryset().filter(profile_id=self.request.user.id)
-        return qs
 
 
 class SimulatorCreateView(LoginRequiredMixin, CreateView):
@@ -79,11 +69,13 @@ class SimulatorUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'simulator/update.html'
     fields = (
         'title',
+        'tags',
         'required_concepts',
         'minimum_concepts',
         'table_dimensions',
         'youtube_link',
-        'form_link'
+        'form_link',
+        'private'
     )
 
     def get_queryset(self):
@@ -103,12 +95,17 @@ class AccountUpdateView(UpdateView):
         'request_message',
         'institution_name'
     )
-    success_url = '/account/'
+    success_url = '/account/updated/'
     extra_context = {'active': 'profile'}
 
     def get_queryset(self):
         qs = super(AccountUpdateView, self).get_queryset().filter(id=self.request.user.id)
         return qs
+
+
+@login_required()
+def updated(request):
+    return render(request, 'account/updated.html')
 
 
 class SimulatorDeleteView(LoginRequiredMixin, DeleteView):
@@ -123,18 +120,16 @@ class SimulatorDeleteView(LoginRequiredMixin, DeleteView):
 
 @login_required()
 def update_token(request, pk):
-    status = None
     simulator = get_object_or_404(Simulador, profile_id=request.user.id, pk=pk)
     if request.method == 'POST':
         simulator.token = get_token()
         simulator.save()
-        status = "Ok"
+        return render(request, 'account/updated.html')
     return render(
         request,
         'simulator/change_token.html',
         {
             'simulator': simulator,
-            'status': status
         }
     )
 

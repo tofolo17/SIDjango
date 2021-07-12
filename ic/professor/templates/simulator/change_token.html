@@ -1,13 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %}Criar simulador{% endblock %}
+{% block title %}Gerar Token aleatório{% endblock %}
 
 {% block content %}
-<h1>Mudar token</h1>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Change</button>
-</form>
-{{ status }}
-{{ simulator.token }}
+<div class="row regular-row">
+    <div class="col-md-12">
+        <div class="p-md-5 p-1">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/account/">Dashboard</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Gerar Token aleatório</li>
+                </ol>
+            </nav>
+            <h2>Gerar Token aleatório</h2>
+            <p>
+                O Token é o que mantém um simulador privado acessível apenas a pessoas escolhidas por
+                você. Ao alterá-lo, elas perderão o acesso ao mesmo. Você quer mesmo alterá-lo?
+            </p>
+            <p>
+                Token atual: <code>{{ simulator.token }}</code>
+            </p>
+            <form method="post">
+                {% csrf_token %}
+                <button class="btn btn-rounded btn-gradient" style="--c-1: #81cff6; --c-2: #abebc4;" type="submit">
+                    Alterar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

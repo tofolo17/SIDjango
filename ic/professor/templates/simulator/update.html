@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Atualizar simulador{% endblock %}
+{% block title %}Editar simulador{% endblock %}
 
 {% block content %}
-<h1>Atualizar simulador</h1>
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Update</button>
-</form>
+<div class="row regular-row">
+    <div class="col-md-12">
+        <div class="p-md-5 p-1">
+            <h2>Editar simulador</h2>
+            <p>Use o formulário abaixo para editar e ver detalhes de seu simulador.</p>
+            <form action="" method="post">
+                {% csrf_token %}
+                {% include 'includes/bs4_default_form.html' with form=form %}
+                <button class="btn btn-rounded btn-gradient" style="--c-1: #d298f5; --c-2: #81cff6" type="submit">
+                    Registrar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

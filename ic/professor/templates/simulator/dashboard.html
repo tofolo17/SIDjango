@@ -23,9 +23,9 @@
                         </div>
                         <div class="col-md-6 text-md-right align-self-center">
                             <svg class="dark-link" data-placement="top" data-toggle="tooltip" fill="none"
-                                 height="1em" style="font-size: 20px;margin-right: 1.1rem;" title="Copiar link"
-                                 viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"
-                                 onclick="copyLink()" id="icon_{{ simulator.id }}">
+                                 height="1em" id="icon_{{ simulator.id }}" onclick="copyLink()"
+                                 style="font-size: 20px;margin-right: 1.1rem;" title="Copiar link" viewBox="0 0 24 24"
+                                 width="1em" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13 7H7V5H13V7Z" fill="currentColor"></path>
                                 <path d="M13 11H7V9H13V11Z" fill="currentColor"></path>
                                 <path d="M7 15H13V13H7V15Z" fill="currentColor"></path>
@@ -47,24 +47,11 @@
                             </script>
                             <a href="/account/simulator/{{ simulator.pk }}/update_token/">
                                 <svg class="dark-link" data-placement="top" data-toggle="tooltip" fill="none"
-                                     height="1em" style="font-size: 20px;margin-right: 1.1rem;" title="Alterar Token"
+                                     height="1em" style="font-size: 20px;margin-right: 1.1rem;"
+                                     title="Gerar Token aleatório"
                                      viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg">
                                     <path clip-rule="evenodd"
                                           d="M6 8C4.34315 8 3 9.34315 3 11V13C3 14.6569 4.34315 16 6 16C7.65685 16 9 14.6569 9 13H15V15H17V13H18V15H20V11H9C9 9.34315 7.65685 8 6 8ZM7 13V11C7 10.4477 6.55228 10 6 10C5.44772 10 5 10.4477 5 11V13C5 13.5523 5.44772 14 6 14C6.55228 14 7 13.5523 7 13Z"
-                                          fill="currentColor"
-                                          fill-rule="evenodd"></path>
-                                </svg>
-                            </a>
-                            <a href="/account/simulator/{{ simulator.pk }}/">
-                                <svg class="dark-link" data-placement="top" data-toggle="tooltip" fill="none"
-                                     height="1em" style="font-size: 20px;margin-right: 1.1rem;" title="Ver detalhes"
-                                     viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11 10.9794C11 10.4271 11.4477 9.97937 12 9.97937C12.5523 9.97937 13 10.4271 13 10.9794V16.9794C13 17.5317 12.5523 17.9794 12 17.9794C11.4477 17.9794 11 17.5317 11 16.9794V10.9794Z"
-                                          fill="currentColor"></path>
-                                    <path d="M12 6.05115C11.4477 6.05115 11 6.49886 11 7.05115C11 7.60343 11.4477 8.05115 12 8.05115C12.5523 8.05115 13 7.60343 13 7.05115C13 6.49886 12.5523 6.05115 12 6.05115Z"
-                                          fill="currentColor"></path>
-                                    <path clip-rule="evenodd"
-                                          d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12Z"
                                           fill="currentColor"
                                           fill-rule="evenodd"></path>
                                 </svg>
@@ -96,6 +83,10 @@
                 There are no similar posts yet.
                 {% endfor %}
             </ul>
+            <a class="btn btn-rounded btn-gradient" href="/account/simulator/create/"
+               style="--c-1: #81cff6; --c-2: #abebc4; margin-top: 1rem;">
+                Criar simulador
+            </a>
         </div>
     </div>
 </div>
