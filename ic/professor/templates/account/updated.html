@@ -7,8 +7,17 @@
     <div class="col-md-12">
         <div class="p-md-5 p-1">
             <h2>Alterações salvas</h2>
+            {% if token %}
             <p>
-                Suas alterações foram salvas. Para voltar aos seus simuladores, <a href="/account/">clique aqui.</a>
+                Novo Token: <code>{{ token }}</code>.
+            </p>
+            <p>
+                Para copiar seu novo link de acesso, <a href="#" onclick="copyLink('updated')">clique aqui</a>.
+            </p>
+            {% endif %}
+            <p>
+                {% if not token %}Suas alterações foram salvas.{% endif %}
+                Para voltar aos seus simuladores, <a href="/account/">clique aqui</a>.
             </p>
         </div>
     </div>

@@ -46,27 +46,46 @@ class Simulador(models.Model):
     """
     Anotações:
         Achar tratamentos para os fields "table_dimensions" e links.
-        Tags
-            https://stackoverflow.com/questions/48086513/django-taggit-display-existing-tags-on-the-django-admin-add-record-page
     """
     tags = TaggableManager()
 
     profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-    title = models.CharField(max_length=100)
+    title = models.CharField(
+        max_length=100,
+        verbose_name="Título"
+    )
 
-    required_concepts = models.CharField(max_length=250)
-    minimum_concepts = models.CharField(max_length=250)
+    required_concepts = models.CharField(
+        max_length=250,
+        verbose_name="Conceitos necessários"
+    )
+    minimum_concepts = models.CharField(
+        max_length=250,
+        verbose_name="Conceitos mínimos"
+    )
 
-    table_dimensions = models.CharField(max_length=100)
+    table_dimensions = models.CharField(
+        max_length=100,
+        verbose_name="Dimensões do experimento"
+    )
 
-    youtube_link = models.CharField(max_length=250)
-    form_link = models.CharField(max_length=250)
+    youtube_link = models.CharField(
+        max_length=250,
+        verbose_name="Link do vídeo Youtube do experimento"
+    )
+    form_link = models.CharField(
+        max_length=250,
+        verbose_name="Link do Formulário Google"
+    )
 
     updated = models.DateTimeField(auto_now=True)
-    token = models.TextField(max_length=16, default=get_token, unique=True)
+    token = models.CharField(max_length=16, default=get_token, unique=True)
 
-    private = models.BooleanField(default=True)
+    private = models.BooleanField(
+        default=True,
+        verbose_name="Privado"
+    )
 
     class Meta:
         verbose_name_plural = 'Simuladores'

@@ -13,7 +13,7 @@
 {% endif %}
 
 <div class="form-row">
-    <div class="col">
+    <div class="col-md-6">
         <div class="form-group">
             {% include 'includes/field_handling.html' with form=form field=form.first_name %}
         </div>
@@ -21,7 +21,7 @@
             {% include 'includes/field_handling.html' with form=form field=form.email %}
         </div>
     </div>
-    <div class="col">
+    <div class="col-md-6">
         <div class="form-group">
             {% include 'includes/field_handling.html' with form=form field=form.last_name %}
         </div>
@@ -34,12 +34,12 @@
     {% include 'includes/field_handling.html' with form=form field=form.request_message %}
 </div>
 <div class="form-row">
-    <div class="col">
+    <div class="col-md-6">
         <div class="form-group">
             {% include 'includes/field_handling.html' with form=form field=form.password %}
         </div>
     </div>
-    <div class="col">
+    <div class="col-md-6">
         <div class="form-group">
             {% include 'includes/field_handling.html' with form=form field=form.password2 %}
         </div>

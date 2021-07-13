@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-md-6 text-md-right align-self-center">
                             <svg class="dark-link" data-placement="top" data-toggle="tooltip" fill="none"
-                                 height="1em" id="icon_{{ simulator.id }}" onclick="copyLink()"
+                                 height="1em" onclick="copyLink('{{ simulator.token }}')"
                                  style="font-size: 20px;margin-right: 1.1rem;" title="Copiar link" viewBox="0 0 24 24"
                                  width="1em" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13 7H7V5H13V7Z" fill="currentColor"></path>
@@ -34,17 +34,6 @@
                                       fill="currentColor"
                                       fill-rule="evenodd"></path>
                             </svg>
-                            <script>
-                                function copyLink() {
-                                    const el = document.createElement('textarea');
-                                    el.value = "http://" + "{{ request.get_host }}" + "/simulator/published/{{ simulator.token }}";
-                                    document.body.appendChild(el);
-                                    el.select();
-                                    document.execCommand('copy');
-                                    document.body.removeChild(el);
-                                    window.alert("Link copiado.")
-                                }
-                            </script>
                             <a href="/account/simulator/{{ simulator.pk }}/update_token/">
                                 <svg class="dark-link" data-placement="top" data-toggle="tooltip" fill="none"
                                      height="1em" style="font-size: 20px;margin-right: 1.1rem;"

@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}Apagar simulador #{{object.id}}{% endblock %}
+{% block title %}Apagar simulador{% endblock %}
 
 {% block content %}
-<h1>Apagar simulador #{{object.id}}</h1>
-<form method="post">
-    {% csrf_token %}
-    Are you sure you want to delete <strong>{{ object }}</strong> ?
-    <button type="submit">Delete</button>
-</form>
+<div class="row regular-row">
+    <div class="col-md-12">
+        <div class="p-md-5 p-1">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/account/">Dashboard</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Altere sua senha</li>
+                </ol>
+            </nav>
+            <h2>Apagar {{ simulator.title }}</h2>
+            <form method="post">
+                {% csrf_token %}
+                Tem certeza de que deseja excluir <strong> {{object}} </strong>?
+                <button class="btn btn-rounded btn-gradient" style="--c-1: #81cff6; --c-2: #abebc4; margin-top: 1rem;"
+                        type="submit">
+                    Apagar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

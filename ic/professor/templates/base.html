@@ -11,6 +11,10 @@
     <link href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap" rel="stylesheet">
     <link href="{% static 'fonts/fontawesome-all.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    <!-- autocomplete -->
+    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="/resources/demos/style.css" rel="stylesheet">
 </head>
 
 <body style="font-family: ABeeZee, sans-serif;">
@@ -169,6 +173,11 @@
 
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<!-- autocomplete -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script>
     function scrollToTop() {
         window.scrollTo({top: 0, behavior: 'smooth'});
@@ -177,8 +186,28 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+
+    function copyLink(param) {
+        const el = document.createElement('textarea');
+        if (param === "updated") {
+            el.value = "http://" + "{{ request.get_host }}" + "/simulator/published/{{ token }}";
+        } else {
+            el.value = "http://" + "{{ request.get_host }}" + "/simulator/published/" + param;
+        }
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        window.alert("Link copiado.")
+    }
+
+    let my_list = '{{ tags }}';
+    my_list = my_list.split(',');
+    $(function () {
+        $("#id_tags").autocomplete({
+            source: my_list
+        });
+    });
 </script>
-
 </body>
-
 </html>

@@ -6,13 +6,19 @@
 <div class="row regular-row">
     <div class="col-md-12">
         <div class="p-md-5 p-1">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/account/">Dashboard</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Editar simulador</li>
+                </ol>
+            </nav>
             <h2>Editar simulador</h2>
             <p>Use o formulário abaixo para editar e ver detalhes de seu simulador.</p>
             <form action="" method="post">
                 {% csrf_token %}
-                {% include 'includes/bs4_default_form.html' with form=form %}
-                <button class="btn btn-rounded btn-gradient" style="--c-1: #d298f5; --c-2: #81cff6" type="submit">
-                    Registrar
+                {% include 'includes/bs4_update_simulator_form.html' with form=form %}
+                <button class="btn btn-rounded btn-gradient" style="--c-1: #81cff6; --c-2: #abebc4;" type="submit">
+                    Salvar
                 </button>
             </form>
         </div>

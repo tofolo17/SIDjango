@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from taggit.models import Tag
 
 from .forms import UserRegistrationForm, LoginForm
 from .models import Simulador, get_token, Conta
@@ -75,15 +76,18 @@ class SimulatorUpdateView(LoginRequiredMixin, UpdateView):
         'table_dimensions',
         'youtube_link',
         'form_link',
-        'private'
+        'private',
+        'token'
     )
+    tags = [tag.name for tag in Tag.objects.all()]
+    extra_context = {
+        'tags': ','.join([str(i) for i in tags]),
+    }
+    success_url = '/account/updated/'
 
     def get_queryset(self):
         qs = super(SimulatorUpdateView, self).get_queryset().filter(profile_id=self.request.user.id)
         return qs
-
-    def get_success_url(self):
-        return reverse_lazy('detail', kwargs={'pk': self.object.id})
 
 
 class AccountUpdateView(UpdateView):
@@ -124,7 +128,7 @@ def update_token(request, pk):
     if request.method == 'POST':
         simulator.token = get_token()
         simulator.save()
-        return render(request, 'account/updated.html')
+        return render(request, 'account/updated.html', {'token': simulator.token})
     return render(
         request,
         'simulator/change_token.html',
