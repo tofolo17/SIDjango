@@ -56,6 +56,10 @@ class SimulatorCreateView(LoginRequiredMixin, CreateView):
         'private'
     )
     success_url = reverse_lazy('dashboard')
+    tags = [tag for tag in Tag.objects.all()]
+    extra_context = {
+        'tags': ','.join([str(i) for i in tags]),
+    }
 
     def is_limit_reached(self):
         pass

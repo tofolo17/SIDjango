@@ -3,12 +3,48 @@
 {% block title %}Criar simulador{% endblock %}
 
 {% block content %}
-<h1>Criar simulador</h1>
+<div class="row regular-row">
+    <div class="col-md-12">
+        <div class="p-md-5 p-1">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/account/">Dashboard</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Criar simulador</li>
+                </ol>
+            </nav>
+            <h2>Criar simulador</h2>
+            <p>Preenchendo o formulário abaixo, você criará uma ferramenta pedagógica poderosa e, com alguns cliques,
+                poderá enviá-lo aos seus alunos. E tudo em minutos!</p>
+            <form action="" method="post">
+                {% csrf_token %}
+                {% include 'includes/bs4_create_simulator_form.html' with form=form %}
+                <button class="btn btn-rounded btn-gradient" style="--c-1: #81cff6; --c-2: #abebc4;" type="submit">
+                    Salvar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Create</button>
-</form>
+<!-- tagify -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 
+<script>
+    let tag_list = '{{ tags }}';
+    tag_list = tag_list.split(',');
+
+    console.log(tag_list)
+
+    new Tagify(
+        document.getElementById("id_tags"),
+        {
+            delimiters: ",| ",
+            suggestionsMinChars: 2,
+            max_tags: 5,
+            whitelist: tag_list,
+            originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+        }
+    )
+</script>
 {% endblock %}
