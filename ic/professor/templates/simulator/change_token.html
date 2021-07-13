@@ -9,13 +9,18 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/account/">Dashboard</a></li>
+                    <li class="breadcrumb-item">
+                        <a href="/simulator/published/{{ simulator.token }}">
+                            {{ simulator.title }}
+                        </a>
+                    </li>
                     <li aria-current="page" class="breadcrumb-item active">Gerar Token aleatório</li>
                 </ol>
             </nav>
             <h2>Gerar Token aleatório</h2>
             <p>
                 O Token é o que mantém um simulador privado acessível apenas a pessoas escolhidas por
-                você. Ao alterá-lo, elas perderão o acesso ao mesmo. Você quer mesmo alterá-lo?
+                você. Ao alterá-lo, elas perderão o acesso ao mesmo. Deseja continuar?
             </p>
             <p>
                 Token atual: <code>{{ simulator.token }}</code>
@@ -23,7 +28,7 @@
             <form method="post">
                 {% csrf_token %}
                 <button class="btn btn-rounded btn-gradient" style="--c-1: #81cff6; --c-2: #abebc4;" type="submit">
-                    Alterar
+                    Gerar novo Token
                 </button>
             </form>
         </div>

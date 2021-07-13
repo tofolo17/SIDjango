@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Apagar simulador{% endblock %}
+{% block title %}Excluir simulador{% endblock %}
 
 {% block content %}
 <div class="row regular-row">
@@ -9,16 +9,21 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/account/">Dashboard</a></li>
-                    <li aria-current="page" class="breadcrumb-item active">Altere sua senha</li>
+                    <li class="breadcrumb-item">
+                        <a href="/simulator/published/{{ simulator.token }}">
+                            {{ object.title }}
+                        </a>
+                    </li>
+                    <li aria-current="page" class="breadcrumb-item active">Excluir simulador</li>
                 </ol>
             </nav>
-            <h2>Apagar {{ simulator.title }}</h2>
+            <h2>Excluir simulador</h2>
             <form method="post">
                 {% csrf_token %}
-                Tem certeza de que deseja excluir <strong> {{object}} </strong>?
+                Tem certeza de que deseja excluir <strong>{{object}}</strong>?
                 <button class="btn btn-rounded btn-gradient" style="--c-1: #81cff6; --c-2: #abebc4; margin-top: 1rem;"
                         type="submit">
-                    Apagar
+                    Excluir
                 </button>
             </form>
         </div>

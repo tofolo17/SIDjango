@@ -47,7 +47,7 @@ class Simulador(models.Model):
     Anotações:
         Achar tratamentos para os fields "table_dimensions" e links.
     """
-    tags = TaggableManager()
+    tags = TaggableManager(help_text="")
 
     profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 

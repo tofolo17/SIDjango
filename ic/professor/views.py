@@ -79,7 +79,7 @@ class SimulatorUpdateView(LoginRequiredMixin, UpdateView):
         'private',
         'token'
     )
-    tags = [tag.name for tag in Tag.objects.all()]
+    tags = [tag for tag in Tag.objects.all()]
     extra_context = {
         'tags': ','.join([str(i) for i in tags]),
     }
