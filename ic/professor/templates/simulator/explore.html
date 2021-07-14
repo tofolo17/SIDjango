@@ -1,14 +1,110 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Explorar{% endblock %}
 
 {% block content %}
-<h1>Explore</h1>
-{% for simulator in simulators %}
-<p>
-    {{ simulator.title }}
-</p>
-{% empty %}
-There are no similar posts yet.
-{% endfor %}
+<div class="row regular-row">
+    <div class="col-md-12">
+        <div class="p-md-5 p-1">
+            <div class="row">
+                <h2>Simuladores da comunidade</h2>
+                <p>
+                    Desfrute de simuladores públicos criados por outros usuários e use-os como inspiração para os seus!
+                    Use a barra de busca para encontrar outros projetos pelo título, ou filtre os marcadores para
+                    explorar seções específicas.
+                </p>
+            </div>
+            <div class="row" style="margin-bottom: 1rem;">
+                <div class="col">
+                    <form>
+                        <div class="form-row">
+                            <div class="input-group col">
+                                <input class="form-control" placeholder="Pesquisar simulador" type="search"/>
+                                <span class="input-group-append">
+                                    <button class="btn btn-rounded btn-gradient"
+                                            style="--c-1: #99e7b7; --c-2: #f8ea6b; color: white;"
+                                            type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col">
+                            <form>
+                                <div class="form-row">
+                                    <div class="col-9"><input class="form-control" type="text"/></div>
+                                    <div class="col-3">
+                                        <button class="btn btn-primary" style="width: 100%;" type="button"><i
+                                                class="fa fa-star"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="list-group">
+                                <li class="list-group-item"><span>List Group Item 1</span></li>
+                                <li class="list-group-item"><span>List Group Item 2</span></li>
+                                <li class="list-group-item"><span>List Group Item 3</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <ul class="list-group list-group-flush c-o-05">
+                        {% for simulator in simulators %}
+                        <li class="list-group-item" style="padding: 6px 10px;">
+                            <div class="row justify-content-between">
+                                <div class="col-md-6">
+                                    <h5>
+                                        <a href="/simulator/published/{{ simulator.token }}">
+                                            {{ simulator.title }}
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div class="col-md-6 text-md-right align-self-center">
+                                    <svg class="dark-link" data-placement="top" data-toggle="tooltip" fill="none"
+                                         height="1em" onclick="copyLink('{{ simulator.token }}')"
+                                         style="font-size: 20px;margin-right: 1.1rem;" title="Copiar link"
+                                         viewBox="0 0 24 24"
+                                         width="1em" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M13 7H7V5H13V7Z" fill="currentColor"></path>
+                                        <path d="M13 11H7V9H13V11Z" fill="currentColor"></path>
+                                        <path d="M7 15H13V13H7V15Z" fill="currentColor"></path>
+                                        <path clip-rule="evenodd"
+                                              d="M3 19V1H17V5H21V23H7V19H3ZM15 17V3H5V17H15ZM17 7V19H9V21H19V7H17Z"
+                                              fill="currentColor"
+                                              fill-rule="evenodd"></path>
+                                    </svg>
+                                    <a href="/simulator/published/{{ simulator.token }}/{{ simulator.pk }}/details/">
+                                        <svg class="dark-link" data-placement="top" data-toggle="tooltip"
+                                             fill="none" height="1em" style="font-size: 20px;margin-right: 1.1rem;" title="Ver detalhes"
+                                             viewBox="0 0 24 24" width="1em"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11 10.9794C11 10.4271 11.4477 9.97937 12 9.97937C12.5523 9.97937 13 10.4271 13 10.9794V16.9794C13 17.5317 12.5523 17.9794 12 17.9794C11.4477 17.9794 11 17.5317 11 16.9794V10.9794Z"
+                                                  fill="currentColor"></path>
+                                            <path d="M12 6.05115C11.4477 6.05115 11 6.49886 11 7.05115C11 7.60343 11.4477 8.05115 12 8.05115C12.5523 8.05115 13 7.60343 13 7.05115C13 6.49886 12.5523 6.05115 12 6.05115Z"
+                                                  fill="currentColor"></path>
+                                            <path clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12Z"
+                                                  fill="currentColor"
+                                                  fill-rule="evenodd"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

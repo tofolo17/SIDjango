@@ -97,12 +97,21 @@ class SimulatorDeleteView(LoginRequiredMixin, DeleteView):
 class ExploreSimulatorListView(ListView):
     model = Simulador
     template_name = 'simulator/explore.html'
+    extra_context = {
+        'active': 'explore'
+    }
 
     def get_context_data(self, **kwargs):
         context = super(ExploreSimulatorListView, self).get_context_data(**kwargs)
         simulators = self.get_queryset().filter(private=False)
         context['simulators'] = simulators
         return context
+
+
+class ExploreSimulatorUpdateView(UpdateView):
+    model = Simulador
+    template_name = 'simulator/details.html'
+    fields = []
 
 
 # Normal views para Simulador

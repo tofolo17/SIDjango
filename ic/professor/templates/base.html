@@ -33,7 +33,9 @@
                     <a class="nav-link text-left" href="#" style="--color: #FFD7C9">Second Item</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-left" href="#" style="--color: #FCF6BD;">Explorar</a>
+                    <a class="nav-link {% if active == 'explore' %}active{% endif %} text-left"
+                       href="/simulator/explore/"
+                       style="{% if active == 'explore' %}--active-color{% else %}--color{% endif %}:#fbf3a7;">Explorar</a>
                 </li>
             </ul>
         </div>
