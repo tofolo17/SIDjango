@@ -7,9 +7,15 @@
     <div class="col-md-12">
         <div class="p-md-5 p-1">
             <h2>Dashboard</h2>
+            {% if simulators %}
             <p>
                 Bem vindo ao seu dashboard. Aqui você poderá administrar seus simuladores.
             </p>
+            {% else %}
+            <p>
+                Você ainda não criou nenhum simulador. Precisa de inspiração? <a href="/simulator/explore/">Explore</a>.
+            </p>
+            {% endif %}
             <ul class="list-group list-group-flush c-o-05">
                 {% for simulator in simulators %}
                 <li class="list-group-item" style="padding: 6px 10px;">
@@ -68,12 +74,10 @@
                         </div>
                     </div>
                 </li>
-                {% empty %}
-                There are no similar posts yet.
                 {% endfor %}
             </ul>
             <a class="btn btn-rounded btn-gradient" href="/account/simulator/create/"
-               style="--c-1: #81cff6; --c-2: #abebc4; margin-top: 1rem;">
+               style="--c-1: #81cff6; --c-2: #abebc4; margin-top: 0.5rem;">
                 Criar simulador
             </a>
         </div>

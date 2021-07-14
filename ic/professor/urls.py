@@ -17,6 +17,6 @@ urlpatterns = [
     path('account/simulator/<int:pk>/delete/', views.SimulatorDeleteView.as_view(), name='delete'),
     path('account/simulator/<int:pk>/update_token/', views.update_token, name='change_token'),
 
-    path('simulator/explore', views.ExploreSimulatorListView.as_view(), name='explore'),
-    path('simulator/published/<str:token>', views.access_simulator, name='simulator')
+    path('simulator/explore/', views.ExploreSimulatorListView.as_view(), name='explore'),
+    path('simulator/published/<str:token>/', views.access_simulator, name='simulator')
 ]

@@ -14,17 +14,7 @@ from .forms import UserRegistrationForm, LoginForm
 from .models import Simulador, get_token, Conta
 
 
-class ExploreSimulatorListView(ListView):
-    model = Simulador
-    template_name = 'simulator/explore.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ExploreSimulatorListView, self).get_context_data(**kwargs)
-        simulators = self.get_queryset().filter(private=False)
-        context['simulators'] = simulators
-        return context
-
-
+# Class-based views para Simulador
 class SimulatorListView(LoginRequiredMixin, ListView):
     model = Simulador
     template_name = 'simulator/dashboard.html'
@@ -94,28 +84,6 @@ class SimulatorUpdateView(LoginRequiredMixin, UpdateView):
         return qs
 
 
-class AccountUpdateView(UpdateView):
-    model = Conta
-    template_name = 'account/update.html'
-    fields = (
-        'first_name',
-        'last_name',
-        'request_message',
-        'institution_name'
-    )
-    success_url = '/account/updated/'
-    extra_context = {'active': 'profile'}
-
-    def get_queryset(self):
-        qs = super(AccountUpdateView, self).get_queryset().filter(id=self.request.user.id)
-        return qs
-
-
-@login_required()
-def updated(request):
-    return render(request, 'account/updated.html')
-
-
 class SimulatorDeleteView(LoginRequiredMixin, DeleteView):
     model = Simulador
     template_name = 'simulator/delete.html'
@@ -126,6 +94,18 @@ class SimulatorDeleteView(LoginRequiredMixin, DeleteView):
         return qs
 
 
+class ExploreSimulatorListView(ListView):
+    model = Simulador
+    template_name = 'simulator/explore.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ExploreSimulatorListView, self).get_context_data(**kwargs)
+        simulators = self.get_queryset().filter(private=False)
+        context['simulators'] = simulators
+        return context
+
+
+# Normal views para Simulador
 @login_required()
 def update_token(request, pk):
     simulator = get_object_or_404(Simulador, profile_id=request.user.id, pk=pk)
@@ -151,6 +131,32 @@ def access_simulator(request, token):
     )
 
 
+# Class-based views para Conta
+class AccountUpdateView(LoginRequiredMixin, UpdateView):
+    model = Conta
+    template_name = 'account/update.html'
+    fields = (
+        'first_name',
+        'last_name',
+        'request_message',
+        'institution_name'
+    )
+    success_url = '/account/updated/'
+    extra_context = {'active': 'profile'}
+
+    def get_queryset(self):
+        qs = super(AccountUpdateView, self).get_queryset().filter(id=self.request.user.id)
+        return qs
+
+
+# Class-based auth views para Conta
+class LoginView(auth_views.LoginView):
+    form_class = LoginForm
+    template_name = 'account/login.html'
+    extra_context = {'active': 'login'}
+
+
+# Normal auth views para Conta
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -189,7 +195,7 @@ def register(request):
     )
 
 
-class LoginView(auth_views.LoginView):
-    form_class = LoginForm
-    template_name = 'account/login.html'
-    extra_context = {'active': 'login'}
+# Normal views para Conta
+@login_required()
+def updated(request):
+    return render(request, 'account/updated.html')
