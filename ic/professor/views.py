@@ -103,6 +103,13 @@ class ExploreSimulatorListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ExploreSimulatorListView, self).get_context_data(**kwargs)
         simulators = self.get_queryset().filter(private=False)
+        try:
+            if self.kwargs['tag'] is not None:
+                my_tags = Tag.objects.filter(slug=self.kwargs['tag']).values_list('name', flat=True)
+                simulators = simulators.filter(tags__name__in=my_tags)
+                context['tag_slug'] = [tag for tag in my_tags][0]
+        except Exception:
+            pass
         context['simulators'] = simulators
         return context
 

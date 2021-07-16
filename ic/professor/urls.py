@@ -18,6 +18,7 @@ urlpatterns = [
     path('account/simulator/<int:pk>/update_token/', views.update_token, name='change_token'),
 
     path('simulator/explore/', views.ExploreSimulatorListView.as_view(), name='explore'),
+    path('simulator/explore/<slug:tag>/', views.ExploreSimulatorListView.as_view(), name='explore_tag'),
     path('simulator/published/<slug:token>/', views.access_simulator, name='simulator'),
     path('simulator/published/<slug:token>/<int:pk>/details/', views.ExploreSimulatorUpdateView.as_view(),
          name='details')

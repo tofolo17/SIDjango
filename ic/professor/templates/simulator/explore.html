@@ -6,6 +6,14 @@
 <div class="row regular-row" style="width: 100%">
     <div class="col-md-12">
         <div class="p-md-5 p-1">
+            {% if tag_slug %}
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/simulator/explore/">Explorar</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">{{ tag_slug }}</li>
+                </ol>
+            </nav>
+            {% endif %}
             <div class="row">
                 <h2>Simuladores da comunidade</h2>
                 <p>
@@ -49,6 +57,15 @@
                                                 </button>
                                             </span>
                                             <input class="form-control" placeholder="Pesquisar marcador" type="search"/>
+                                            {% if tag_slug %}
+                                            <span class="input-group-append">
+                                                <a class="btn btn-rounded btn-gradient" href="/simulator/explore/"
+                                                   style="--c-1: #99e7b7; --c-2: #f8ea6b; color: white;"
+                                                   type="button">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </span>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </form>
@@ -59,7 +76,7 @@
                                 <ul class="list-group list-group-flush c-o-05 scroll" style="--mh: 300px;">
                                     {% for tag in tags %}
                                     <li class="list-group-item">
-                                        <span>{{ tag }}</span>
+                                        <a href="/simulator/explore/{{ tag.slug }}">{{ tag }}</a>
                                     </li>
                                     {% empty %}
                                     Nada por aqui.
