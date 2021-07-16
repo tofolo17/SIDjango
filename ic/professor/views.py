@@ -3,6 +3,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.postgres.search import TrigramSimilarity
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.db.models import Count
@@ -14,28 +15,25 @@ from taggit.models import Tag
 from .forms import UserRegistrationForm, LoginForm, CreateViewForm
 from .models import Simulador, get_token, Conta
 
-# Tags
-tags = [tag for tag in Tag.objects.all()]
-tags_to_tagify = ','.join([str(i) for i in tags])
-
 
 # Class-based views para Simulador
 class SimulatorListView(LoginRequiredMixin, ListView):
     model = Simulador
+    context_object_name = 'simulators'
     template_name = 'simulator/dashboard.html'
     extra_context = {'active': 'dashboard'}
 
-    def get_context_data(self, **kwargs):
-        context = super(SimulatorListView, self).get_context_data(**kwargs)
-        simulators = self.get_queryset().filter(profile_id=self.request.user.id).order_by('-updated')
-        context['simulators'] = simulators
-        return context
+    def get_queryset(self, **kwargs):
+        simulators = Simulador.objects.filter(profile_id=self.request.user.id).order_by('-updated')
+        return simulators
 
 
 class SimulatorCreateView(LoginRequiredMixin, CreateView):
     form_class = CreateViewForm
     template_name = 'simulator/create.html'
     success_url = reverse_lazy('dashboard')
+    tags = [tag for tag in Tag.objects.all()]
+    tags_to_tagify = ','.join([str(i) for i in tags])
     extra_context = {
         'tags': tags_to_tagify
     }
@@ -65,6 +63,8 @@ class SimulatorUpdateView(LoginRequiredMixin, UpdateView):
         'token'
     )
     success_url = '/account/updated/'
+    tags = [tag for tag in Tag.objects.all()]
+    tags_to_tagify = ','.join([str(i) for i in tags])
     extra_context = {
         'tags': tags_to_tagify
     }
@@ -95,14 +95,27 @@ class SimulatorDeleteView(LoginRequiredMixin, DeleteView):
 class ExploreSimulatorListView(ListView):
     model = Simulador
     template_name = 'simulator/explore.html'
+    context_object_name = 'simulators'
+    tags = [tag for tag in Tag.objects.all()]
     extra_context = {
         'active': 'explore',
-        'tags': tags
+        'tags': tags,
     }
 
     def get_context_data(self, **kwargs):
         context = super(ExploreSimulatorListView, self).get_context_data(**kwargs)
-        simulators = self.get_queryset().filter(private=False)
+
+        # Parâmetros via GET da URL
+        params = self.request.GET.dict()
+        print(params)  # Parei aqui
+
+        query = self.request.GET.get('q')
+        if not query:
+            simulators = self.get_queryset().filter(private=False)
+        else:
+            simulators = Simulador.objects.annotate(
+                similarity=TrigramSimilarity('title', query)
+            ).filter(similarity__gt=0.1).order_by('-similarity')
         try:
             if self.kwargs['tag'] is not None:
                 my_tags = Tag.objects.filter(slug=self.kwargs['tag']).values_list('name', flat=True)

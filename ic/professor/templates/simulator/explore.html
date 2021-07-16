@@ -27,14 +27,18 @@
                     <form>
                         <div class="form-row">
                             <div class="input-group col">
-                                <input class="form-control" placeholder="Pesquisar simulador" type="search"/>
-                                <span class="input-group-append">
-                                    <button class="btn btn-rounded btn-gradient"
-                                            style="--c-1: #99e7b7; --c-2: #f8ea6b; color: white;"
-                                            type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
+                                <form method='GET'>
+                                    <input name="q2" type="hidden" value="{{ request.GET.q2 }}"/>
+                                    <input class="form-control" name='q' placeholder="Pesquisar simulador"
+                                           type="text" value='{{ request.GET.q }}'/>
+                                    <span class="input-group-append">
+                                        <button class="btn btn-rounded btn-gradient"
+                                                style="--c-1: #99e7b7; --c-2: #f8ea6b; color: white;"
+                                                type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </form>
                             </div>
                         </div>
                     </form>
@@ -49,23 +53,27 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="input-group col">
-                                            <span class="input-group-prepend">
-                                                <button class="btn btn-rounded btn-gradient"
-                                                        style="--c-1: #99e7b7; --c-2: #f8ea6b; color: white;"
-                                                        type="button">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
-                                            </span>
-                                            <input class="form-control" placeholder="Pesquisar marcador" type="search"/>
-                                            {% if tag_slug %}
-                                            <span class="input-group-append">
-                                                <a class="btn btn-rounded btn-gradient" href="/simulator/explore/"
-                                                   style="--c-1: #99e7b7; --c-2: #f8ea6b; color: white;"
-                                                   type="button">
-                                                    <i class="fa fa-times"></i>
-                                                </a>
-                                            </span>
-                                            {% endif %}
+                                            <form method='GET'>
+                                                <span class="input-group-prepend">
+                                                    <button class="btn btn-rounded btn-gradient"
+                                                            style="--c-1: #99e7b7; --c-2: #f8ea6b; color: white;"
+                                                            type="submit">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </span>
+                                                <input name="q" type="hidden" value="{{ request.GET.q }}"/>
+                                                <input class="form-control" name='q2' placeholder="Pesquisar marcador"
+                                                       type="text" value='{{ request.GET.q2 }}'/>
+                                                {% if tag_slug %}
+                                                <span class="input-group-append">
+                                                    <a class="btn btn-rounded btn-gradient" href="/simulator/explore/"
+                                                       style="--c-1: #99e7b7; --c-2: #f8ea6b; color: white;"
+                                                       type="button">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </span>
+                                                {% endif %}
+                                            </form>
                                         </div>
                                     </div>
                                 </form>
@@ -87,7 +95,8 @@
                     </div>
                 </div>
                 <div class="col-md-8 order-md-1 order-0">
-                    <ul class="list-group list-group-flush c-o-05 scroll" style="--mh: 360px;">
+                    <ul class="list-group list-group-flush c-o-05 {% if simulators|length > 1 %} scroll {% endif %}"
+                        style="--mh: 360px;">
                         {% for simulator in simulators %}
                         <li class="list-group-item" style="padding: 6px 10px;">
                             <div class="row justify-content-between">
