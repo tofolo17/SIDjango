@@ -5,13 +5,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
+from django.db.models import Count
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from taggit.models import Tag
 
-from .forms import UserRegistrationForm, LoginForm
+from .forms import UserRegistrationForm, LoginForm, CreateViewForm
 from .models import Simulador, get_token, Conta
+
+# Tags
+tags = [tag for tag in Tag.objects.all()]
+tags_to_tagify = ','.join([str(i) for i in tags])
 
 
 # Class-based views para Simulador
@@ -28,31 +33,17 @@ class SimulatorListView(LoginRequiredMixin, ListView):
 
 
 class SimulatorCreateView(LoginRequiredMixin, CreateView):
-    """
-    Anotações:
-        Terminar método de limite
-            https://stackoverflow.com/questions/59462964/django-createview-only-allow-n-number-of-objects-created-redirect-if-limit-is
-    """
-    model = Simulador
+    form_class = CreateViewForm
     template_name = 'simulator/create.html'
-    fields = (
-        'title',
-        'tags',
-        'required_concepts',
-        'minimum_concepts',
-        'table_dimensions',
-        'youtube_link',
-        'form_link',
-        'private'
-    )
     success_url = reverse_lazy('dashboard')
-    tags = [tag for tag in Tag.objects.all()]
     extra_context = {
-        'tags': ','.join([str(i) for i in tags]),
+        'tags': tags_to_tagify
     }
 
-    def is_limit_reached(self):
-        pass
+    def get_form_kwargs(self):
+        kwargs = super(SimulatorCreateView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
     def form_valid(self, form):
         form.instance.profile = self.request.user
@@ -73,11 +64,10 @@ class SimulatorUpdateView(LoginRequiredMixin, UpdateView):
         'private',
         'token'
     )
-    tags = [tag for tag in Tag.objects.all()]
-    extra_context = {
-        'tags': ','.join([str(i) for i in tags]),
-    }
     success_url = '/account/updated/'
+    extra_context = {
+        'tags': tags_to_tagify
+    }
 
     def get_queryset(self):
         qs = super(SimulatorUpdateView, self).get_queryset().filter(profile_id=self.request.user.id)
@@ -93,12 +83,21 @@ class SimulatorDeleteView(LoginRequiredMixin, DeleteView):
         qs = super(SimulatorDeleteView, self).get_queryset().filter(profile_id=self.request.user.id)
         return qs
 
+    def delete(self, request, *args, **kwargs):
+        try:
+            return super().delete(request, *args, **kwargs)
+        finally:
+            Tag.objects.annotate(
+                ntag=Count('taggit_taggeditem_items')
+            ).filter(ntag=0).delete()
+
 
 class ExploreSimulatorListView(ListView):
     model = Simulador
     template_name = 'simulator/explore.html'
     extra_context = {
-        'active': 'explore'
+        'active': 'explore',
+        'tags': tags
     }
 
     def get_context_data(self, **kwargs):
@@ -111,7 +110,13 @@ class ExploreSimulatorListView(ListView):
 class ExploreSimulatorUpdateView(UpdateView):
     model = Simulador
     template_name = 'simulator/details.html'
-    fields = []
+    fields = (
+        'title',
+        'tags',
+        'required_concepts',
+        'minimum_concepts',
+        'table_dimensions'
+    )
 
 
 # Normal views para Simulador

@@ -102,6 +102,10 @@ a:link, .dark-link {
     .body-container {
         height: auto;
     }
+
+    .m-corr {
+        margin-top: 20px;
+    }
 }
 
 /* padding */
@@ -164,4 +168,12 @@ p, .alert-danger {
 .breadcrumb {
     background-color: white !important;
     padding: 0;
+}
+
+/* list group */
+.scroll {
+    max-height: var(--mh);
+    overflow: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
 }

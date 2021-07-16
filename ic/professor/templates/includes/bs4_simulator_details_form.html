@@ -1,0 +1,8 @@
+{% load widget_tweaks %}
+
+{% for field in form.visible_fields %}
+<div class="form-group">
+    {{ field.label_tag }}
+    {{ field|attr:"readonly"|attr:"class:form-control" }}
+</div>
+{% endfor %}

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Excluir simulador{% endblock %}
+{% block title %}Excluir {{ object.title  }}{% endblock %}
 
 {% block content %}
 <div class="row regular-row">
@@ -17,10 +17,10 @@
                     <li aria-current="page" class="breadcrumb-item active">Excluir simulador</li>
                 </ol>
             </nav>
-            <h2>Excluir simulador</h2>
+            <h2>Excluir {{ object.title }}</h2>
             <form method="post">
                 {% csrf_token %}
-                Tem certeza de que deseja excluir <strong>{{object}}</strong>?
+                Tem certeza de que deseja excluir este simulador?
                 <button class="btn btn-rounded btn-gradient" style="--c-1: #81cff6; --c-2: #abebc4; margin-top: 1rem;"
                         type="submit">
                     Excluir

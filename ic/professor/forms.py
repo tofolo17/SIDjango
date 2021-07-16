@@ -1,8 +1,9 @@
 from django import forms
+from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 
-from .models import Conta
+from .models import Conta, Simulador
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -62,3 +63,28 @@ class LoginForm(AuthenticationForm):
                 self.error_messages['pendent'],
                 code='pendent',
             )
+
+
+class CreateViewForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(CreateViewForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Simulador
+        fields = (
+            'title',
+            'tags',
+            'required_concepts',
+            'minimum_concepts',
+            'table_dimensions',
+            'youtube_link',
+            'form_link',
+            'private'
+        )
+
+    def clean(self):
+        print('oi')
+        print(self.instance)
+        if Simulador.objects.filter(profile=self.user).count() >= settings.MAX_SIMULATORS:
+            raise forms.ValidationError('Você ultrapassou o limite de simuladores por conta.')

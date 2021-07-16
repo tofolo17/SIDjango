@@ -1,6 +1,56 @@
 {% extends "base.html" %}
 
-{% block title %}Teste{% endblock %}
+{% block title %}Detalhes do {{ object }}{% endblock %}
 
 {% block content %}
+<div class="row regular-row">
+    <div class="col-md-12">
+        <div class="p-md-5 p-1">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/simulator/explore/">Explorar</a></li>
+                    <li class="breadcrumb-item">
+                        <a href="/simulator/published/{{ object.token }}">
+                            {{ object.title }}
+                        </a>
+                    </li>
+                    <li aria-current="page" class="breadcrumb-item active">Detalhes do simulador</li>
+                </ol>
+            </nav>
+            <h2>Detalhes do {{ object }}</h2>
+            <p>
+                Autor: {{ object.profile.first_name }} {{ object.profile.last_name}}
+            </p>
+            <p>
+                Instituição: {{ object.profile.institution_name }}
+            </p>
+            <form action="" method="post">
+                {% csrf_token %}
+                {% include 'includes/bs4_simulator_details_form.html' with form=form %}
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- tagify -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+
+<script>
+    let tag_list = '{{ tags }}';
+    tag_list = tag_list.split(',');
+
+    console.log(tag_list)
+
+    new Tagify(
+        document.getElementById("id_tags"),
+        {
+            delimiters: ",| ",
+            suggestionsMinChars: 2,
+            max_tags: 5,
+            whitelist: tag_list,
+            originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+        }
+    )
+</script>
 {% endblock %}
