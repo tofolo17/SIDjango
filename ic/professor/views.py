@@ -111,7 +111,7 @@ class ExploreSimulatorListView(ListView):
         if not sim_q:
             simulators = self.get_queryset().filter(private=False)
         else:
-            simulators = Simulador.objects.annotate(
+            simulators = self.get_queryset().filter(private=False).annotate(
                 similarity=TrigramSimilarity('title', sim_q)
             ).filter(similarity__gt=0.1).order_by('-similarity')
             context['sim_q'] = True
@@ -124,12 +124,19 @@ class ExploreSimulatorListView(ListView):
             pass
 
         # Tratamento da query dos marcadores
+        public_tags = []
+        for simulator in simulators:
+            tags = simulator.tags.all()
+            for tag in tags:
+                public_tags.append(tag)
         if not tag_q:
-            tags = Tag.objects.all()
+            tags = set(public_tags)
         else:
-            tags = Tag.objects.annotate(
+            public_tags = Tag.objects.filter(name__in=public_tags)
+            tags = public_tags.annotate(
                 similarity=TrigramSimilarity('name', tag_q)
             ).filter(similarity__gt=0.1).order_by('-similarity')
+
             context['tag_q'] = True
 
         context['simulators'] = simulators
