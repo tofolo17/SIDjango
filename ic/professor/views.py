@@ -221,8 +221,9 @@ def register(request):
                 new_user.save()
 
                 send_mail(
-                    subject="Nova requisição de uso",
-                    message="http://" + request.get_host() + "/admin/",
+                    subject=settings.APP_NAME + " - Nova requisição de uso: " + new_user.username,
+                    message="Temos uma nova requisição de uso. Para saber mais, entre em http://" + request.get_host()
+                            + "/admin/ e acesse a aba 'Contas'. Por fim, defina a situação do mesmo através de 'Ação'.",
                     from_email=settings.EMAIL_HOST_USER,
                     recipient_list=[settings.ADMIN_MAIL]
                 )

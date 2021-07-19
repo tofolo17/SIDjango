@@ -6,19 +6,15 @@ from .models import *
 
 admin.site.site_url = '/account'
 
-"""
-Anotações:
-    Personalizar e-mails
-"""
-
 
 @admin.action(description='Autorizar Contas')
 def authorize(modeladmin, request, queryset):
     queryset.update(account_situation="autorizado")
     for data in queryset:
         send_mail(
-            subject="Você foi autorizado",
-            message="http://" + request.get_host() + "/account/",
+            subject=settings.APP_NAME + " - Você foi autorizado",
+            message="Parabéns, sua requisição de uso foi aceita. "
+                    "Para continuar, acesse: http://" + request.get_host() + "/account/.",
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[data.username]
         )
@@ -29,7 +25,7 @@ def deauthorize(modeladmin, request, queryset):
     queryset.update(account_situation="não autorizado")
     for data in queryset:
         send_mail(
-            subject="Você não foi autorizado",
+            subject=settings.APP_NAME + " - Você não foi autorizado",
             message=f"{data.justification_template}",
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[data.username]
@@ -39,7 +35,7 @@ def deauthorize(modeladmin, request, queryset):
 @admin.register(Conta)
 class AccountAdmin(auth_admin.UserAdmin):
     list_filter = ['account_situation']
-    list_display = ['email', 'first_name', 'last_name', 'account_situation']
+    list_display = ['email', 'first_name', 'last_name', 'institution_name', 'request_message', 'account_situation']
     fieldsets = auth_admin.UserAdmin.fieldsets + (
         ('Campos Personalizados', {
             'fields': ('request_message', 'institution_name', 'account_situation', 'justification_template')

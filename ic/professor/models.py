@@ -25,7 +25,12 @@ class Conta(AbstractUser):
         help_text="Use este campo para informar os seus objetivos de uso, metas de aprendizado, e afins."
     )
     institution_name = models.CharField(max_length=100, verbose_name="Instituição de ensino")
-    account_situation = models.CharField(max_length=15, choices=SITUATION_CHOICES, default='pendente')
+    account_situation = models.CharField(
+        max_length=15,
+        choices=SITUATION_CHOICES,
+        verbose_name="Situação da conta",
+        default='pendente'
+    )
     justification_template = models.TextField(
         verbose_name="Justificativa para não autorização",
         default="Desculpe, mas seu pedido foi negado."
