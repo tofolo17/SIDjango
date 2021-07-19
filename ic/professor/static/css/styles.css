@@ -102,9 +102,11 @@ a:link, .dark-link {
     .body-container {
         height: auto;
     }
+}
 
+@media (max-width: 992px) {
     .m-corr {
-        margin-top: 20px;
+        margin-top: 40px;
     }
 }
 
@@ -172,8 +174,6 @@ p, .alert-danger {
 
 /* list group */
 .scroll {
-    max-height: var(--mh);
-    overflow: scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }

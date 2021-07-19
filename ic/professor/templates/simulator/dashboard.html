@@ -16,8 +16,7 @@
                 Você ainda não criou nenhum simulador. Precisa de inspiração? <a href="/simulator/explore/">Explore</a>.
             </p>
             {% endif %}
-            <ul class="list-group list-group-flush c-o-05 {% if simulators|length > 1 %} scroll {% endif %}"
-                style="--mh: 350px;">
+            <ul class="list-group list-group-flush c-o-05 scroll" style="max-height: 215px;">
                 {% for simulator in simulators %}
                 <li class="list-group-item" style="padding: 6px 10px;">
                     <div class="row justify-content-between">
@@ -84,4 +83,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        resizeWidth();
+    });
+
+    $(window).resize(function () {
+        resizeWidth();
+    });
+
+    function resizeWidth() {
+        const maxHeight = 215;
+        if ($('.scroll').height() >= maxHeight) {
+            $('.scroll').css('overflow', 'hidden');
+        } else {
+            $('.scroll').css('overflow', 'visible');
+        }
+    }
+</script>
 {% endblock %}

@@ -96,34 +96,44 @@ class ExploreSimulatorListView(ListView):
     model = Simulador
     template_name = 'simulator/explore.html'
     context_object_name = 'simulators'
-    tags = [tag for tag in Tag.objects.all()]
     extra_context = {
-        'active': 'explore',
-        'tags': tags,
+        'active': 'explore'
     }
 
     def get_context_data(self, **kwargs):
         context = super(ExploreSimulatorListView, self).get_context_data(**kwargs)
 
         # Parâmetros via GET da URL
-        params = self.request.GET.dict()
-        print(params)  # Parei aqui
+        sim_q = self.request.GET.get('q')
+        tag_q = self.request.GET.get('q2')
 
-        query = self.request.GET.get('q')
-        if not query:
+        # Tratamento da query do simulador
+        if not sim_q:
             simulators = self.get_queryset().filter(private=False)
         else:
             simulators = Simulador.objects.annotate(
-                similarity=TrigramSimilarity('title', query)
+                similarity=TrigramSimilarity('title', sim_q)
             ).filter(similarity__gt=0.1).order_by('-similarity')
+            context['sim_q'] = True
         try:
             if self.kwargs['tag'] is not None:
                 my_tags = Tag.objects.filter(slug=self.kwargs['tag']).values_list('name', flat=True)
                 simulators = simulators.filter(tags__name__in=my_tags)
-                context['tag_slug'] = [tag for tag in my_tags][0]
+                context['tag_name'] = [tag for tag in my_tags][0]
         except Exception:
             pass
+
+        # Tratamento da query dos marcadores
+        if not tag_q:
+            tags = Tag.objects.all()
+        else:
+            tags = Tag.objects.annotate(
+                similarity=TrigramSimilarity('name', tag_q)
+            ).filter(similarity__gt=0.1).order_by('-similarity')
+            context['tag_q'] = True
+
         context['simulators'] = simulators
+        context['tags'] = tags
         return context
 
 
